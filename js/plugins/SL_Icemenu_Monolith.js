@@ -210,29 +210,26 @@
 	el_wrapperDiv = document.createElement('div');
 	document.body.appendChild(el_wrapperDiv);
 	el_wrapperDiv.setAttribute('id', 'MainMenuWrapper');
+	el_wrapperDiv.classList.add('mmDisabled');
 	
 	function createMenuOptionButton(elName, buttonContentText){
 		// let hash = 'mm_' + elName + '_' + Math.floor(Math.random() * Math.floor(Math.random() * Date.now()));
 		let hash = 'mm_' + elName;
 		
 		el = document.createElement('button');
-		el.style.display = 'none'; //Desabilita temporariamente até que o CSS tenha carregado
+		
 		el_wrapperDiv.appendChild(el);
 		el.setAttribute('id', hash);
 		el.setAttribute('class', 'mm_option');
 		el.innerText = buttonContentText;
-		
-		setTimeout(function(){
-			el.style.display = 'initial'; //Habilita novamente os elementos dos botões
-		}, menuDelayFactor);
 	}
 	
 	createMenuOptionButton('newGame', 'Novo Jogo');
 	createMenuOptionButton('continue', 'Continuar');
 	createMenuOptionButton('options', 'Opções');
-	
+
 	//Seta as configurações iniciais do menu
-	function SetMainMenu(){
+	function MenuInit(){
 		let el = document.querySelector('[id^="mm_continue"]');
 
 		const _Window_TitleCommand_makeCommandList = Window_TitleCommand.prototype.makeCommandList;
@@ -250,73 +247,80 @@
 		};
 	}
 	
-	SetMainMenu();
+	//Inicia as configurações essenciais para o funcionamento do menu
+	MenuInit();
 	
 	/**/
 	
+	//Adição do menu suspenso
 	const mmCss = `
-			<style>
-			#MainMenuWrapper
-			{
-				margin-top: -1000px;
-				margin-left: -1000px;
-				display: none;
-				background: rgb(0 0 0 / 25%);
-				position: absolute;
-				animation: fadeIn 2s;
-				z-index: -9999;
-			}
-			
-			#MainMenuWrapper.loaded
-			{
-				z-index: 9999;
-				display: flex;
-				width: 50%;
-				height: auto;
-				padding: 1em;
-				margin: 0;
-			}
+		<style>
+		.loaded button
+		{
+			display: initial!important;
+		}
+		
+		#MainMenuWrapper
+		{
+			margin-top: -1000px;
+			margin-left: -1000px;
+			display: none;
+			background: rgb(0 0 0 / 25%);
+			position: absolute;
+			animation: fadeIn 2s;
+			z-index: -9999;
+		}
+		
+		#MainMenuWrapper.loaded
+		{
+			z-index: 9;
+			display: flex;
+			width: 50%;
+			height: auto;
+			padding: 1em;
+			margin: 0;
+			margin-top: auto!important;
+		}
 
-			.mm_option
-			{
-				color: white!important;
-				background: #` + ColorTheme + `!important;
-				
-				padding: 1em;
-				
-				border: 0;
-				
-				transition: 0.1s;
-				
-				margin: 0.5em 0.25em;
-			}
+		.mm_option
+		{
+			color: white!important;
+			background: #` + ColorTheme + `!important;
 			
-			.mm_option:hover
-			{
-				filter: brightness(0.75);
-				transition: 0.1s;
-				scale: 2;
-			}
+			padding: 1em;
 			
-			#MainMenuWrapper.mmDisabled
-			{
-				display: none;
-				transition: 0.2s;
-			}
+			border: 0;
 			
-			.mm_option.mmDisabled
-			{
-				user-select: none!important;
-				pointer-events: none!important;
-				filter: grayscale(0.5) brightness(0.75);
-				opacity: 0.8;
-			}
-			</style>
-		`;
-	
-	setTimeout(function(){
-		document.head.insertAdjacentHTML('beforeend', mmCss);
-	}, 100);
+			transition: 0.1s;
+			
+			margin: 0.5em 0.25em;
+		}
+		
+		.mm_option:hover
+		{
+			filter: brightness(0.75);
+			transition: 0.1s;
+			scale: 2;
+		}
+		
+		#MainMenuWrapper.mmDisabled
+		{
+			display: none;
+			transition: 0.2s;
+		}
+		
+		.mm_option.mmDisabled
+		{
+			user-select: none!important;
+			pointer-events: none!important;
+			filter: grayscale(0.5) brightness(0.75);
+			opacity: 0.8;
+		}
+		</style>
+	`;
+
+	document.head.insertAdjacentHTML('beforeend', mmCss);
+	el_wrapperDiv.classList.remove('mmDisabled');
 
 	//Funções das opções
 	function FNewGame(el){
