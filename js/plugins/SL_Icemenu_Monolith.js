@@ -79,7 +79,7 @@
  * -------------------------------------------------------------------------
  * @help
  //=========================================================================
- //  WOLFGANG ICE MENU 1.0
+ //  SIR LOBO ICE MENU 1.x.x
  //=========================================================================
  *	
  *	First, put the folder "wg_menu" in your project's root folder
@@ -122,10 +122,10 @@
 (() => {
     //Plugin Info & Settings
     const pluginName = "WG Ice Menu";
-    const wgpath = '../../wg_menu/';
+    const wgpath = '../../js/plugins/SL_Icemenu_Monolith/';
 
     //Params
-    const parameters = PluginManager.parameters("WG_Icemenu");
+    const parameters = PluginManager.parameters("SL_Icemenu_Monolith");
 
     const oParams = {
         CustomFont: String(parameters['CustomFont']),

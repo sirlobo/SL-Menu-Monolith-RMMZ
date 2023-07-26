@@ -1,12 +1,6 @@
 # Ignore everything
 *
-
-# But not these files...
-!.gitignore
-!script.pl
-!template.latex
-
-# ...even if they are in subdirectories
+# Subdirectories
 !*/
 
 # if the files to be tracked are in subdirectories
