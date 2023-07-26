@@ -76,6 +76,16 @@
  * @default 2
  * @desc Set vertical position of the menu
  *
+ * @param menuDelayFactor
+ * @text Fator de Delay
+ * @type select
+ * @option 500ms
+ * @value 500
+ * @option 350ms
+ * @value 350
+ * @default 350
+ * @desc Seta o delay de aparecimento do menu. É recomendado alterar esta propriedade APENAS se houverem glitches visuais.
+ *
  * -------------------------------------------------------------------------
  * @help
  //=========================================================================
@@ -204,10 +214,15 @@
 		let hash = 'mm_' + elName;
 		
 		el = document.createElement('button');
+		el.style.display = 'none'; //Desabilita temporariamente até que o CSS tenha carregado
 		el_wrapperDiv.appendChild(el);
 		el.setAttribute('id', hash);
 		el.setAttribute('class', 'mm_option');
 		el.innerText = buttonContentText;
+		
+		setTimeout(function(){
+			el.style.display = 'initial'; //Habilita novamente os elementos dos botões
+		}, menuDelayFactor);
 	}
 	
 	createMenuOptionButton('newGame', 'Novo Jogo');
@@ -241,21 +256,25 @@
 			<style>
 			#MainMenuWrapper
 			{
+				margin-top: -1000px;
+				margin-left: -1000px;
+				display: none;
+				background: rgb(0 0 0 / 25%);
+				position: absolute;
+				animation: fadeIn 2s;
+				z-index: -9999;
+			}
+			
+			#MainMenuWrapper.loaded
+			{
+				z-index: 9999;
 				display: flex;
 				width: 50%;
 				height: auto;
 				padding: 1em;
 				margin: 0;
-				background: rgb(0 0 0 / 25%);
-				
-				position: absolute;
-				z-index: 9999;
-				
-				opacity: 0;
-				
-				animation: FadeIn
 			}
-			
+
 			.mm_option
 			{
 				color: white!important;
