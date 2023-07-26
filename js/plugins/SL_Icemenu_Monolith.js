@@ -30,7 +30,7 @@
  * @param CustomFont
  * @text Font Name
  * @desc Put your custom font on wg_menu/fonts/ and type here the name exactly as it is there
- * @default HunDIN1451
+ * @default Zector
  *
  * @param ColorTheme
  * @text Primary Theme Color (Hex)
@@ -82,17 +82,17 @@
  //  SIR LOBO ICE MENU 1.x.x
  //=========================================================================
  *	
- *	First, put the folder "wg_menu" in your project's root folder
- *	Then copy "WG_icemenu.js" file to the plugins folder
+ *	First, put the folder "SL_Icemenu_Monolith" in the default RMMMV/RMMZ plugins's folder
+ *	Then copy "SL_Icemenu_Monolith.js" file to the plugins folder
  *	
  *  If you desire to change the font, just:
  *
- *  -Put your custom font on folder "wg_menu/fonts/"
+ *  -Put your custom font on folder "SL_Icemenu_Monolith/fonts/"
  *  -Change the value from param "Font Name" with the same name of your ".ttf"
  *  -Don't insert the file extension
  *
  *  -------------------------------------------------------------------------
- *  Default Font Name: HunDIN1451
+ *  Default Font Name: Zector
  *  -------------------------------------------------------------------------
  * YOU CANNOT MODIFY THIS SCRIPT AND DISTRIBUTE A NEW SCRIPT BASED ON THIS AND GIVE CREDIT TO YOURSELF WITHOUT CITING THE ORIGINAL AUTHOR
  *
