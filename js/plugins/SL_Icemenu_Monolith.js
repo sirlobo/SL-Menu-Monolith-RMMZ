@@ -143,12 +143,14 @@
         HorizontalPosition: String(parameters['HorizontalPosition']),
         VerticalPosition: String(parameters['VerticalPosition']),
         UseTitleAsImage: String(parameters['UseTitleAsImage']),
+        menuDelayFactor: String(parameters['menuDelayFactor']),
         UseArtwork: String(parameters['UseArtwork'])
     };
 
     const ColorTheme = oParams.ColorTheme.substr(0,6);
     const oHorizontalPosition = parseInt(oParams.HorizontalPosition);
     const oVerticalPosition = parseInt(oParams.VerticalPosition);
+    const menuDelayFactor = parseInt(oParams.menuDelayFactor);
     const oUseTitleAsImage = parseInt(oParams.UseTitleAsImage);
     const oUseArtwork = parseInt(oParams.UseArtwork);
 
