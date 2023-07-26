@@ -14,5 +14,5 @@
 !*/a/b/c/*
 
 # NOT IGNORE
-!/js/plugins/SL_Monolith_Blue.js
-!/js/plugins/SL_Monolith_Blue/index.html
+!/js/plugins/SL_Icemenu_Monolith.js
+!/js/plugins/SL_Icemenu_Monolith/index.html
