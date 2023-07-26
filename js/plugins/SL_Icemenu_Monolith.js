@@ -250,6 +250,10 @@
 				
 				position: absolute;
 				z-index: 9999;
+				
+				opacity: 0;
+				
+				animation: FadeIn
 			}
 			
 			.mm_option
@@ -291,7 +295,7 @@
 	
 	setTimeout(function(){
 		document.head.insertAdjacentHTML('beforeend', mmCss);
-	}, 150);
+	}, 100);
 
 	//Funções das opções
 	function FNewGame(el){
