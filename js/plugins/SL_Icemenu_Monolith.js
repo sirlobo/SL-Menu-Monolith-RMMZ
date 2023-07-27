@@ -448,7 +448,9 @@
 
 	const mmCss = `
 		<style>
-		#gameCanvasSub
+		#gameCanvasSub,
+		.mm_gamelogo,
+		#errorPrint
 		{
 			user-select: none!important;
 			pointer-events: none!important;
@@ -586,21 +588,13 @@
 		.mm_option
 		{
 			color: white!important;
-			background: #` + ColorTheme + `!important;
-			
-			padding: 1em;
-			
+			background: #3e759c!important;
+			padding: 0.5em;
 			border: 0;
-			
 			transition: 0.1s;
-			
-			/*margin: 0.5em 0.25em;*/
 			margin: 0.5em 0;
-			
-			/*transform: scale(0.8);*/
-			
 			width: calc(100% - 2em);
-			font-size: 2vw;
+			font-size: 1.5em;
 		}
 		
 		.mm_option:hover
@@ -647,7 +641,7 @@
 			width: 100%;
 			max-width: 50%;
 			height: auto;
-		}
+		}	
 		</style>
 	`;
 
@@ -755,36 +749,40 @@
 
 	//Listener de redimensionamento do game canvas
 	setTimeout(function(){
-		let gameCanvas = document.querySelector('#gameVideo');
+		let gameVideo = document.querySelector('#gameVideo');
 		let menuContainer = document.querySelector('#MainMenuContainer');
+		let menuWrapper = document.querySelector('#MainMenuWrapper');
 
 		function outputsize() {
-			//Get all gameCanvas style properties
+			//Get all gameVideo style properties
 			let sizeOffset = '0'; // default = 36px
-			let canvasStyleCSS = gameCanvas.style.cssText;
+			let canvasStyleCSS = gameVideo.style.cssText;
 
-			//Apply CSS to "MainMenuContainer" from "gameCanvas" and remove unnecessary properties
+			//Apply CSS to "MainMenuContainer" from "gameVideo" and remove unnecessary properties
 			menuContainer.style.cssText = canvasStyleCSS;
 			menuContainer.style.removeProperty('position');
 			menuContainer.style.removeProperty('cursor');
 			menuContainer.style.removeProperty('z-index');
 			menuContainer.style.removeProperty('opacity');
 			
-			//Apply the offset values to width and height got from gameCanvas CSS style
-			let gameCanvas_W = menuContainer.style.width;
-			let gameCanvas_H = menuContainer.style.height;
+			//Apply the offset values to width and height got from gameVideo CSS style
+			let gameVideo_W = menuContainer.style.width;
+			let gameVideo_H = menuContainer.style.height;
 
 			//Remove attributes to avoid duplicated properties
 			menuContainer.style.removeProperty('width');
 			menuContainer.style.removeProperty('height');
 
-			menuContainer.style.setProperty('width', 'calc(' + gameCanvas_W + ' - ' + sizeOffset + 'px' + ')');
-			menuContainer.style.setProperty('height', 'calc(' + gameCanvas_H + ' - ' + sizeOffset + 'px' + ')');
+			menuContainer.style.setProperty('width', 'calc(' + gameVideo_W + ' - ' + sizeOffset + 'px' + ')');
+			menuContainer.style.setProperty('height', 'calc(' + gameVideo_H + ' - ' + sizeOffset + 'px' + ')');
+
+			menuWrapper.style.setProperty('width', (parseInt(gameVideo_W) / 2) + 'px');
+			menuWrapper.style.setProperty('height', (parseInt(gameVideo_H) / 2) + 'px');
 		}
 		
 		outputsize();
 
-		new ResizeObserver(outputsize).observe(gameCanvas);
+		new ResizeObserver(outputsize).observe(gameVideo);
 	}, 300);
 
 	//--------------------------BUG---------------------------------------//
