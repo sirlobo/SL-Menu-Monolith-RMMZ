@@ -562,8 +562,6 @@
 	  _Scene_Options_popScene.call(this); // Executa a ação padrão do fechamento do menu de opções
 	  ToggleMainMenu();
 	};
-	wgpath
-	/**/
 
 	//Listener de redimensionamento do game canvas
 	setTimeout(function(){
@@ -597,8 +595,6 @@
 
 		new ResizeObserver(outputsize).observe(gameCanvas);
 	}, 300);
-	
-	/**/
 
 
 	//--------------------------BUG---------------------------------------//
@@ -620,7 +616,7 @@
     };
 
     //Delete Any Title
-    if(oUseTitleAsImage == 0)
+    if(oUseTitleAsImage)
     {
         Scene_Title.prototype.drawGameTitle = function()
         {
