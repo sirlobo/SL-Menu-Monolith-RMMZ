@@ -1,0 +1,6 @@
+# find all the directories (-type d)
+# filter the empty ones (-empty)
+# ignore the .git folder
+# add .gitkeep to all the matched folders
+
+find . -type d -empty -not -path "./.git/*" -exec touch {}/.gitkeep \;
