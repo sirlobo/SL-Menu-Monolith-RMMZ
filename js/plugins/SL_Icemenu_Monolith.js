@@ -559,6 +559,8 @@
 			margin: 0.5em 0;
 			
 			/*transform: scale(0.8);*/
+			
+			width: calc(100% - 2em);
 		}
 		
 		.mm_option:hover
