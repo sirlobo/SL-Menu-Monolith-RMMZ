@@ -802,8 +802,6 @@
 			menuContainer.style.removeProperty('width');
 			menuContainer.style.removeProperty('height');
 
-			// menuContainer.style.setProperty('width', 'calc(' + gameVideo_W + ' - ' + sizeOffset + 'px' + ')');
-			// menuContainer.style.setProperty('height', 'calc(' + gameVideo_H + ' - ' + sizeOffset + 'px' + ')');
 			menuContainer.style.setProperty('width', 'calc(' + gameVideo_W + ' - ' + sizeOffset + 'px' + ')');
 			menuContainer.style.setProperty('height', 'calc(' + gameVideo_H + ' - ' + sizeOffset + 'px' + ')');
 
