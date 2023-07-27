@@ -507,14 +507,26 @@
 		/* Menu Style Variations
 		/*-----------------------------------------------------------------------------------*/
 		
-		#MainMenuWrapper.oMenuStyle--verticalaligned_descendent
+		#MainMenuWrapper.oMenuStyle--verticalaligned,
+		#MainMenuWrapper.oMenuStyle--verticalaligned_descendent,
+		#MainMenuWrapper.oMenuStyle--verticalcascade_ascendent
 		{
 			flex-direction: column;
+		}
+		
+		#MainMenuWrapper.oMenuStyle--verticalaligned_descendent
+		{
+			background: blue;
 		}	
 		
 		#MainMenuWrapper.oMenuStyle--verticalcascade_ascendent
 		{
-			flex-direction: column;
+			background: orangered;
+		}
+		
+		#MainMenuWrapper.oMenuStyle--horizontalcentered
+		{
+			flex-direction: row;
 		}
 		`
 
