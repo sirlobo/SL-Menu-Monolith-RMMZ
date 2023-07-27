@@ -138,8 +138,10 @@
  * @value Vertical Aligned
  * @option Horizontal Centered
  * @value Horizontal Centered
- * @option Vertical Cascade
- * @value Vertical Cascade
+ * @option Vertical Cascade (Ascendent)
+ * @value Vertical Cascade Ascendent
+ * @option Vertical Cascade (Descendent)
+ * @value Vertical Cascade Descendent
  * @default Vertical Aligned
  * @desc Set the menu style elements
  * -------------------------------------------------------------------------
@@ -289,6 +291,37 @@
     }
 	
 	//-----------------------------------------------------------------------------------//
+	// Condições especiais de classes
+	//-----------------------------------------------------------------------------------//
+
+	const countMenuStyle = oMenuStyle.split(' ');
+	var oMenuStyle_variation = oMenuStyle.trim().replace(' ','');
+
+	//Menu style | Vertical Cascade (Ascendent and Descendent)
+	var cssProps_verticalcascade = '';
+
+	if(oMenuStyle.split(' ').length > 2){
+		oMenuStyle_variation = 'verticalcascade_' + countMenuStyle[2];
+		
+		function cssSpc_verticalcascade(){
+			let cssSpc_verticalcascadeArr = [];
+			
+			for(let i = 0; i < oMenuStyle.split(' ').length; i++){
+				cssSpc_verticalcascadeArr.push(`
+					#MainMenuWrapper.oMenuStyle--` + oMenuStyle_variation + ` > .mm_option:nth-child(` + (i + 1) + `)
+					{
+						margin-left: ` + (i) + `em;
+					}
+				`);
+			}
+			
+			cssProps_verticalcascade = cssSpc_verticalcascadeArr.join('\n');
+		}
+		
+		cssSpc_verticalcascade();
+	}
+	
+	//-----------------------------------------------------------------------------------//
 	// Criação dos elementos que compõem o menu principal
 	//-----------------------------------------------------------------------------------//
 	
@@ -301,7 +334,7 @@
 	elementHTML_wrapper = document.createElement('div');
 	elementHTML_container.appendChild(elementHTML_wrapper);
 	elementHTML_wrapper.setAttribute('id', 'MainMenuWrapper');
-	elementHTML_wrapper.setAttribute('class', 'oMenuStyle--' + oMenuStyle.trim().replace(' ',''));
+	elementHTML_wrapper.setAttribute('class', 'oMenuStyle--' + oMenuStyle_variation);
 	
 	//Adiciona as classes necessárias
 	let mm_container_classes_align_v = 'alignment__vertical--bottom'; //default vertical
@@ -358,9 +391,7 @@
 		
 		buttonsArrayIndex.push(elementHTML_optBtn);
 	}
-	
-	
-	
+
 	//Chama a função para cada um dos botões de opções (baseadas no menu padrão com as opções de "Novo Jogo", "Continuar", "Opções")
 	createMenuOptionButton('newGame', 'Novo Jogo');
 	createMenuOptionButton('continue', 'Continuar');
@@ -389,39 +420,6 @@
 	//Inicia as configurações essenciais para o funcionamento do menu
 	MenuInit();
 
-	//-----------------------------------------------------------------------------------//
-	// Condições especiais de classes
-	//-----------------------------------------------------------------------------------//
-	
-	/*
-	#MainMenuWrapper.oMenuStyle--verticalcascade_ ` + i + `
-	{
-	flex-direction: column;
-	}
-	*/
-	
-	//verticalcascade
-	var cssProps_verticalcascade = '';
-
-	function cssSpc_verticalcascade(){
-		let cssSpc_verticalcascadeArr = [];
-		
-		for(let i = 0; i < 3; i++){
-			cssSpc_verticalcascadeArr.push(`
-				#MainMenuWrapper.oMenuStyle--verticalcascade
-				{
-					flex-direction: column;
-				}
-			`);
-		}
-
-		setTimeout(function(){
-			cssProps_verticalcascade = cssSpc_verticalcascadeArr.join('\n');
-		}, 350);
-	}
-	
-	cssSpc_verticalcascade();
-	
 	//-----------------------------------------------------------------------------------//
 	// Adição do CSS
 	//-----------------------------------------------------------------------------------//
@@ -477,27 +475,28 @@
 			width: 35%;
 		}
 		
-		#MainMenuWrapper.oMenuStyle--verticalaligned
+		/*-----------------------------------------------------------------------------------*/
+		/* Menu Style Variations
+		/*-----------------------------------------------------------------------------------*/
+		
+		#MainMenuWrapper.oMenuStyle--verticalaligned_descendent
 		{
 			flex-direction: column;
-		}
-		`
+		}	
 		
-		+
-		
-		cssProps_verticalcascade
-		
-		+
-		
-		`
-		#MainMenuWrapper.oMenuStyle--verticalcascade > button:nth-child()
+		#MainMenuWrapper.oMenuStyle--verticalcascade_ascendent
 		{
 			flex-direction: column;
-		}
-		
-		#MainMenuWrapper.oMenuStyle--horizontalaligned
-		{
-			flex-direction: column;
+			
+			`
+			
+			+
+			
+			cssProps_verticalcascade
+			
+			+
+			
+			`
 		}
 		
 		/*-----------------------------------------------------------------------------------*/
