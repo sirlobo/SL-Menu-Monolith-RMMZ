@@ -69,6 +69,8 @@
  *
  * @param VerticalPosition
  * @type select
+ * @option Top
+ * @value 0
  * @option Center
  * @value 1
  * @option Bottom
@@ -193,11 +195,56 @@
 	timeBG.style.zIndex = '99999';
 	timeBG.setAttribute("id", "buttontestimg");*/
 
-	//Cria os elementos que compõem o menu principal
+	//-----------------------------------------------------------------------------------//
+	// Cria os elementos que compõem o menu principal
+	//-----------------------------------------------------------------------------------//
 	
+	//Cria o WRAPPER principal do menu
 	el_wrapperDiv = document.createElement('div');
 	document.body.appendChild(el_wrapperDiv);
 	el_wrapperDiv.setAttribute('id', 'MainMenuWrapper');
+	
+	//Adiciona as classes necessárias
+	let mm_wrapper_classes_align_v = '';
+	let mm_wrapper_classes_align_h = '';
+	
+	el_wrapperDiv.classList.add('mmDisabled');
+	
+	//Verifica os parâmetros de posicionamento para adicionar as classes corretas (vertical e horizontal)
+	switch(oVerticalPosition)
+	{
+		case 0:
+			mm_wrapper_classes_align_v = 'alignment__vertical--top';
+			break;
+		case 1:
+			mm_wrapper_classes_align_v = 'alignment__vertical--center';
+			break;
+		case 2:
+			mm_wrapper_classes_align_v = 'alignment__vertical--bottom';
+			break;
+	   default:
+			mm_wrapper_classes_align_v = 'alignment__vertical--bottom';
+			break;
+	}
+
+	switch(oHorizontalPosition)
+	{
+		case 0:
+			mm_wrapper_classes_align_h = 'alignment__horizontal--left';
+			break;
+		case 1:
+			mm_wrapper_classes_align_h = 'alignment__horizontal--center';
+			break;
+		case 2:
+			mm_wrapper_classes_align_h = 'alignment__horizontal--right';
+			break;
+	   default:
+			mm_wrapper_classes_align_h = 'alignment__horizontal--left';
+			break;
+	}
+	
+	//Adiciona as classes de posicionamento obtidas
+	el_wrapperDiv.classList.add('mmDisabled');
 	el_wrapperDiv.classList.add('mmDisabled');
 	
 	function createMenuOptionButton(elName, buttonContentText){
@@ -212,6 +259,7 @@
 		el.innerText = buttonContentText;
 	}
 	
+	//Cria os botões com as opções do menu padrão (Novo Jogo, Continue, Opções)
 	createMenuOptionButton('newGame', 'Novo Jogo');
 	createMenuOptionButton('continue', 'Continuar');
 	createMenuOptionButton('options', 'Opções');
@@ -281,11 +329,42 @@
 			margin-left: initial;
 		}
 		
-		/* Alignment Classes */
+		/*-----------------------------------------------------------------------------------*/
+		/* Alignment Classes
+		/*-----------------------------------------------------------------------------------*/
 		
-		.Alignment_Vertical_Top
+		/* Horizontal */
+		
+		.alignment__horizontal--left
+		{
+			justify-content: flex-start;
+		}
+		
+		.alignment__horizontal--right
+		{
+			justify-content: flex-end;
+		}
+		
+		.alignment__horizontal--center
+		{
+			justify-content: center;
+		}
+
+		/* Vertical */
+		
+		.alignment__vertical--top
 		{
 			align-items: flex-start;
+		}
+		
+		.alignment__vertical--bottom
+		{
+			align-items: flex-end;
+		}
+		
+		.alignment__vertical--center
+		{
+			align-items: center;
 		}
 		
 		/* Alignment Classes */
