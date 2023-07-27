@@ -267,7 +267,7 @@
 		this._commandWindow.x = -2000;
 		this._commandWindow.y = -2000;
 
-		this._commandWindow.windowskin = ImageManager.loadSystem(slpath('img','menu_window'));
+		this._commandWindow.windowskin = ImageManager.loadSystem(slpath('img') + 'menu_window');
         
         //Remove Content BackSprite
         this._commandWindow._contentsBackSprite.alpha = 0;
@@ -496,6 +496,13 @@
 		.mm_gamelogo
 		{
 			display: block;
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			width: 100%;
+			max-width: fit-content;
 		}
 		</style>
 	`;
