@@ -130,18 +130,18 @@
  * @desc Set VERTICAL position of the menu
  *
  *
- * @param LogoPosition
- * @text Vertical position
+ * @param MenuStyle
+ * @text Menu style
  * @parent MainSettings
  * @type select
- * @option Top
- * @value Top
- * @option Center
- * @value Center
- * @option Bottom
- * @value Bottom
- * @default Bottom
- * @desc Set "gamelogo" position of the menu (the position are relative to the position menu)
+ * @option Horizontal Centered
+ * @value 0
+ * @option Vertical Aligned
+ * @value 1
+ * @option Vertical Aligned
+ * @value 1
+ * @default 1
+ * @desc Set "gamelogo" position of the menu (the position are relative to the chosen menu position)
  * -------------------------------------------------------------------------
  * @help
  //=========================================================================
@@ -566,7 +566,7 @@
 	// Configura a gamelogo
 	//-----------------------------------------------------------------------------------//
 	
-	const gamelogo_filename = slpath('img') + 'gamelogo.png';
+	const gamelogo_filename = slpath('img') + 'gamelogo--shadow-blur.png';
 
 	function createGamelogo(){
 		let elementID = 'mm_' + 'gamelogo_main';
