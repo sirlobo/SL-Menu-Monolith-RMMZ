@@ -256,10 +256,16 @@
 			margin-top: -1000px;
 			margin-left: -1000px;
 			display: none;
-			background: rgb(0 0 0 / 25%);
 			position: absolute;
 			animation: fadeIn 2s;
 			z-index: -9999;
+			
+			padding: 0;
+			
+			/*background: rgb(0 0 0 / 25%);*/
+			
+			background: black;
+			border: 2px solid yellow;
 		}
 		
 		#MainMenuWrapper.loaded
@@ -400,26 +406,36 @@
     };
 	
 	//Listener do canvas
-	function onResizeGameCanvas(el, callback){
-	  var elementHeight = el.height,
-		  elementWidth = el.width;
-	  setInterval(function(){
-		  if( el.height !== elementHeight || el.width !== elementWidth ){
-			elementHeight = el.height;
-			elementWidth = el.width;
-			callback();
-		  }
-	  }, 300);
-	}
-	
-	let gameCanvas = null;
-	
 	setTimeout(function(){
-		gameCanvas = document.querySelector('#gameCanvas');
+		let gameCanvas = document.querySelector('#gameCanvas');
+		let menuWrapper = document.querySelector('#MainMenuWrapper');
 
-		onResizeGameCanvas(gameCanvas, function(){
-			alert("Woo!");
-		});
+		function outputsize() {
+			//Get all gameCanvas style properties
+			let sizeOffset = '36'; //36px
+			let canvasStyleCSS = gameCanvas.style.cssText;
+			
+			//Apply CSS to MainwenuWrapper from gameCanvasmenuWrapper and remove unnecessary properties
+			menuWrapper.style.cssText = canvasStyleCSS;
+			menuWrapper.style.removeProperty('position');
+			menuWrapper.style.removeProperty('cursor');
+			menuWrapper.style.removeProperty('z-index');
+			
+			//Apply the offset values to width and height got from gameCanvas CSS style
+			let gameCanvas_W = menuWrapper.style.width;
+			let gameCanvas_H = menuWrapper.style.height;
+
+			//Remove attributes to avoid duplicated properties
+			menuWrapper.style.removeProperty('width');
+			menuWrapper.style.removeProperty('height');
+
+			menuWrapper.style.setProperty('width', 'calc(' + gameCanvas_W + ' - ' + sizeOffset + 'px' + ')');
+			menuWrapper.style.setProperty('height', 'calc(' + gameCanvas_H + ' - ' + sizeOffset + 'px' + ')');
+		}
+		
+		outputsize();
+
+		new ResizeObserver(outputsize).observe(gameCanvas);
 	}, 350);
 	
 	/**/
