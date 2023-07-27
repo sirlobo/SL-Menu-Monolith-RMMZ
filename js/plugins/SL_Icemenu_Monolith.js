@@ -244,44 +244,17 @@
 		document.querySelector('#gameCanvas').classList.add('#gameCanvasSub');
 	},350);
 	
-	//
-	
+	//Remove o menu de opções original
 	let windowAttrs = Scene_Title.prototype.create;
 
     Scene_Title.prototype.create = function() {
         windowAttrs.call(this);
 
         this._commandWindow.opacity = 0;
-        this._commandWindow.width = Graphics.width / 2;
-
-        /*switch(oVerticalPosition)
-        {
-            case 1:
-                this._commandWindow.y = this._commandWindow.width / 2 + 52;
-                break;
-            case 2:
-                this._commandWindow.y = this._commandWindow.width;
-                break;
-           default:
-                this._commandWindow.y = this._commandWindow.width / 2 + 52;
-                break;
-		}
-
-        switch(oHorizontalPosition)
-        {
-            case 0:
-                this._commandWindow.x = -20;
-                break;
-            case 1:
-                this._commandWindow.x = Graphics.width / 2 / 2;
-                break;
-            case 2:
-                this._commandWindow.x = Graphics.width - 280;
-                break;
-           default:
-                this._commandWindow.x = Graphics.width / 2 / 2;
-                break;
-		}*/
+        this._commandWindow.width = 0;
+        this._commandWindow.height = 0;
+		this._commandWindow.x = -2000;
+		this._commandWindow.y = -2000;
 
 		this._commandWindow.windowskin = ImageManager.loadSystem(wgpath + "img/menu_window");
         
@@ -290,7 +263,7 @@
     }
 	
 	//-----------------------------------------------------------------------------------//
-	// Cria os elementos que compõem o menu principal
+	// Criação dos elementos que compõem o menu principal
 	//-----------------------------------------------------------------------------------//
 	
 	//Cria o WRAPPER principal do menu
