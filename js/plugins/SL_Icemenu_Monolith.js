@@ -498,12 +498,12 @@
 		#MainMenuWrapper
 		{
 			display: flex;
-			/*width: 35%;*/
-			/*width: calc(35% + 2em);*/
-			
-			width: 500px; /* fixed with*/
-			
-			/*background: black;*/
+			/* background: black; */
+			position: absolute;
+			top: auto;
+			left: 0;
+			bottom: 0;
+			right: auto;
 		}
 		
 		/*-----------------------------------------------------------------------------------*/
@@ -596,6 +596,9 @@
 			margin: 0.25em 0;
 			width: calc(100% - 2em);
 			font-size: 1.5em;
+			
+			/*width: calc(100% - 360px);
+			height: 52px;*/
 		}
 		
 		.mm_option:hover
@@ -651,7 +654,19 @@
 			width: 100%;
 			max-width: 50%;
 			height: auto;
-		}	
+		}
+		
+		/*-----------------------------------------------------------------------------------*/
+		/* Media queries
+		/*-----------------------------------------------------------------------------------*/
+		
+		@media screen and (max-width: 720px)
+		{
+			.mm_option
+			{
+				font-size: 1.25em;
+			}
+		}
 		</style>
 	`;
 
@@ -786,8 +801,10 @@
 			menuContainer.style.setProperty('width', 'calc(' + gameVideo_W + ' - ' + sizeOffset + 'px' + ')');
 			menuContainer.style.setProperty('height', 'calc(' + gameVideo_H + ' - ' + sizeOffset + 'px' + ')');
 
-			menuWrapper.style.setProperty('width', (parseInt(gameVideo_W) / 2) + 'px');
-			// menuWrapper.style.setProperty('height', (parseInt(gameVideo_H) / 2) + 'px');
+			if(parseInt(gameVideo_W) > parseInt(gameVideo_H))
+				menuWrapper.style.setProperty('width', (parseInt(gameVideo_W) / 2) + 'px');
+			else if(parseInt(gameVideo_W) < parseInt(gameVideo_H))
+				menuWrapper.style.setProperty('height', (parseInt(gameVideo_H) / 2) + 'px');
 		}
 		
 		outputsize();
