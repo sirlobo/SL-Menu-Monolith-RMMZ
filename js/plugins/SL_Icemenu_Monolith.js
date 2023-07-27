@@ -134,14 +134,14 @@
  * @text Menu style
  * @parent MainSettings
  * @type select
- * @option Horizontal Centered
+ * @option Vertical Aligned
  * @value 0
- * @option Vertical Aligned
+ * @option Horizontal Centered
  * @value 1
- * @option Vertical Aligned
- * @value 1
- * @default 1
- * @desc Set "gamelogo" position of the menu (the position are relative to the chosen menu position)
+ * @option Vertical Cascade
+ * @value 2
+ * @default 0
+ * @desc Set the menu style elements
  * -------------------------------------------------------------------------
  * @help
  //=========================================================================
@@ -290,63 +290,69 @@
 	// Criação dos elementos que compõem o menu principal
 	//-----------------------------------------------------------------------------------//
 	
-	//Cria o WRAPPER principal do menu
+	//Cria o container principal do menu
+	elementHTML_container = document.createElement('div');
+	document.body.appendChild(elementHTML_container);
+	elementHTML_container.setAttribute('id', 'MainMenuContainer');
+	
+	//Cria o wrapper dos botões da navegação
 	elementHTML_wrapper = document.createElement('div');
-	document.body.appendChild(elementHTML_wrapper);
+	elementHTML_container.appendChild(elementHTML_wrapper);
 	elementHTML_wrapper.setAttribute('id', 'MainMenuWrapper');
 	
 	//Adiciona as classes necessárias
-	let mm_wrapper_classes_align_v = 'alignment__vertical--bottom'; //default vertical
-	let mm_wrapper_classes_align_h = 'alignment__horizontal--left'; //default horizontal
+	let mm_container_classes_align_v = 'alignment__vertical--bottom'; //default vertical
+	let mm_container_classes_align_h = 'alignment__horizontal--left'; //default horizontal
 
-	elementHTML_wrapper.classList.add('mmDisabled');
+	elementHTML_container.classList.add('mmDisabled');
 	
 	//Verifica os parâmetros de posicionamento para adicionar as classes corretas (vertical e horizontal)
 	switch(oVerticalPosition)
 	{
 		case 'top':
-			mm_wrapper_classes_align_v = 'alignment__vertical--top';
+			mm_container_classes_align_v = 'alignment__vertical--top';
 			break;
 		case 'center':
-			mm_wrapper_classes_align_v = 'alignment__vertical--center';
+			mm_container_classes_align_v = 'alignment__vertical--center';
 			break;
 		case 'bottom':
-			mm_wrapper_classes_align_v = 'alignment__vertical--bottom';
+			mm_container_classes_align_v = 'alignment__vertical--bottom';
 			break;
 	   default:
-			mm_wrapper_classes_align_v = '';
+			mm_container_classes_align_v = '';
 			break;
 	}
 
 	switch(oHorizontalPosition)
 	{
 		case 'left':
-			mm_wrapper_classes_align_h = 'alignment__horizontal--left';
+			mm_container_classes_align_h = 'alignment__horizontal--left';
 			break;
 		case 'center':
-			mm_wrapper_classes_align_h = 'alignment__horizontal--center';
+			mm_container_classes_align_h = 'alignment__horizontal--center';
 			break;
 		case 'right':
-			mm_wrapper_classes_align_h = 'alignment__horizontal--right';
+			mm_container_classes_align_h = 'alignment__horizontal--right';
 			break;
 	}
 	
 	//Adiciona as classes de posicionamento obtidas para setar a posição do menu
-	elementHTML_wrapper.classList.add(mm_wrapper_classes_align_v);
-	elementHTML_wrapper.classList.add(mm_wrapper_classes_align_h);
+	elementHTML_container.classList.add(mm_container_classes_align_v);
+	elementHTML_container.classList.add(mm_container_classes_align_h);
 	
+	//Método para criar os elementos de botões interativos do menu principal
 	function createMenuOptionButton(elName, buttonContentText){
 		let hash = 'mm_' + elName;
 		
 		let elementHTML_optBtn = document.createElement('button');
 		
-		elementHTML_wrapper.appendChild(elementHTML_optBtn);
+		elementHTML_container.appendChild(elementHTML_optBtn);
 		elementHTML_optBtn.setAttribute('id', hash);
 		elementHTML_optBtn.setAttribute('class', 'mm_option');
 		elementHTML_optBtn.innerText = buttonContentText;
 	}
 	
-	//Cria os botões com as opções do menu padrão (Novo Jogo, Continue, Opções)
+	//Chama a função para cada um dos botões de opções (baseadas no menu padrão com as opções de "Novo Jogo", "Continuar", "Opções")
 	createMenuOptionButton('newGame', 'Novo Jogo');
 	createMenuOptionButton('continue', 'Continuar');
 	createMenuOptionButton('options', 'Opções');
@@ -366,8 +372,8 @@
 		};
 		
 		setTimeout(function(){
-			elementHTML_wrapper.classList.remove('mmDisabled');
-			elementHTML_wrapper.classList.add('loaded');
+			elementHTML_container.classList.remove('mmDisabled');
+			elementHTML_container.classList.add('loaded');
 		}, 300);
 	}
 	
@@ -390,7 +396,7 @@
 			display: initial!important;
 		}
 		
-		#MainMenuWrapper
+		#MainMenuContainer
 		{
 			margin-top: -1000px;
 			margin-left: -1000px;
@@ -406,10 +412,10 @@
 			
 			background: none;
 			
-			/*border: 2px solid yellow;*//*debug resize wrapper based on canvas */
+			/*border: 2px solid yellow;*//*debug resize container based on canvas */
 		}
 		
-		#MainMenuWrapper.loaded
+		#MainMenuContainer.loaded
 		{
 			z-index: 9;
 			display: flex;
@@ -489,7 +495,7 @@
 			scale: 2;
 		}
 		
-		#MainMenuWrapper.mmDisabled
+		#MainMenuContainer.mmDisabled
 		{
 			display: none;
 			transition: 0.2s;
@@ -523,8 +529,8 @@
 	//Insere o CSS criado na área de renderização
 	document.head.insertAdjacentHTML('beforeend', mmCss);
 	
-	//Habilita o wrapper do menu para interação
-	elementHTML_wrapper.classList.remove('mmDisabled');
+	//Habilita o container do menu para interação
+	elementHTML_container.classList.remove('mmDisabled');
 
 	//-----------------------------------------------------------------------------------//
 	// Funções das opções
@@ -554,7 +560,7 @@
 
 	//Alterna a visibilidade do menu quando necessário
 	function ToggleMainMenu(){
-		let el = document.querySelector('#MainMenuWrapper');
+		let el = document.querySelector('#MainMenuContainer');
 		
 		if(el.classList.contains('mmDisabled'))
 			el.classList.remove('mmDisabled');
@@ -573,7 +579,7 @@
 		
 		elementHTML_imgLogo = document.createElement('img');
 		
-		elementHTML_wrapper.appendChild(elementHTML_imgLogo);
+		elementHTML_container.appendChild(elementHTML_imgLogo);
 		elementHTML_imgLogo.setAttribute('id', elementID);
 		elementHTML_imgLogo.setAttribute('class', 'mm_gamelogo');
 		elementHTML_imgLogo.setAttribute('src', gamelogo_filename);
@@ -619,29 +625,29 @@
 	//Listener de redimensionamento do game canvas
 	setTimeout(function(){
 		let gameCanvas = document.querySelector('#gameCanvas');
-		let menuWrapper = document.querySelector('#MainMenuWrapper');
+		let menuContainer = document.querySelector('#MainMenuContainer');
 
 		function outputsize() {
 			//Get all gameCanvas style properties
 			let sizeOffset = '36'; //36px
 			let canvasStyleCSS = gameCanvas.style.cssText;
 			
-			//Apply CSS to MainwenuWrapper from gameCanvasmenuWrapper and remove unnecessary properties
-			menuWrapper.style.cssText = canvasStyleCSS;
-			menuWrapper.style.removeProperty('position');
-			menuWrapper.style.removeProperty('cursor');
-			menuWrapper.style.removeProperty('z-index');
+			//Apply CSS to "MainMenuContainer" from "gameCanvas" and remove unnecessary properties
+			menuContainer.style.cssText = canvasStyleCSS;
+			menuContainer.style.removeProperty('position');
+			menuContainer.style.removeProperty('cursor');
+			menuContainer.style.removeProperty('z-index');
 			
 			//Apply the offset values to width and height got from gameCanvas CSS style
-			let gameCanvas_W = menuWrapper.style.width;
-			let gameCanvas_H = menuWrapper.style.height;
+			let gameCanvas_W = menuContainer.style.width;
+			let gameCanvas_H = menuContainer.style.height;
 
 			//Remove attributes to avoid duplicated properties
-			menuWrapper.style.removeProperty('width');
-			menuWrapper.style.removeProperty('height');
+			menuContainer.style.removeProperty('width');
+			menuContainer.style.removeProperty('height');
 
-			menuWrapper.style.setProperty('width', 'calc(' + gameCanvas_W + ' - ' + sizeOffset + 'px' + ')');
-			menuWrapper.style.setProperty('height', 'calc(' + gameCanvas_H + ' - ' + sizeOffset + 'px' + ')');
+			menuContainer.style.setProperty('width', 'calc(' + gameCanvas_W + ' - ' + sizeOffset + 'px' + ')');
+			menuContainer.style.setProperty('height', 'calc(' + gameCanvas_H + ' - ' + sizeOffset + 'px' + ')');
 		}
 		
 		outputsize();
