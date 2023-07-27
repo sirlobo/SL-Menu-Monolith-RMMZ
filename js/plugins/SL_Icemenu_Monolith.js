@@ -386,7 +386,7 @@
 			
 			background: none;
 			
-			border: 2px solid yellow;
+			/*border: 2px solid yellow;*//*debug resize wrapper based on canvas */
 		}
 		
 		#MainMenuWrapper.loaded
