@@ -72,12 +72,34 @@
  * @param EffectFadeDelay
  * @parent OtherPreferences
  * @text Delay on start
- * @type number
- * @min 300
- * @max 5000
- * @decimals 4
- * @default 300
- * @desc Delay time in milliseconds (Min: 300, Max: 5000)
+ * @type select
+ *
+ * @option 0.3s
+ * @value 0.3s
+ *
+ * @option 0.5s
+ * @value 0.5s
+ *
+ * @option 0.75s
+ * @value 0.75s
+ *
+ * @option 1s
+ * @value 1s
+ *
+ * @option 2s
+ * @value 2s
+ *
+ * @option 3s
+ * @value 3s
+ *
+ * @option 4s
+ * @value 4s
+ *
+ * @option 5s
+ * @value 5s
+ *
+ * @default 0.3s
+ * @desc Delay time in seconds
  *
  *
  * @param HorizontalPosition
@@ -155,7 +177,10 @@
     const pluginName = "WG Ice Menu";
     const wgpath = '../../js/plugins/SL_Icemenu_Monolith/';
 
-    //Params
+	//-----------------------------------------------------------------------------------//
+	// Define e configura os parâmetros
+	//-----------------------------------------------------------------------------------//
+
     const parameters = PluginManager.parameters("SL_Icemenu_Monolith");
 
     const oParams = {
@@ -168,13 +193,52 @@
         UseArtwork: String(parameters['UseArtwork'])
     };
 
+	function parseDelayFloat(delayParam){
+		let parsedParam = parseFloat(delayParam);
+		let res = 300;
+		
+		switch(parsedParam)
+		{
+			case 0.3:
+				res = 300;
+				break;
+			case 0.5:
+				res = 500;
+				break;
+			case 0.75:
+				res = 750;
+				break;
+			case 1:
+				res = 1000;
+				break;
+			case 2:
+				res = 2000;
+				break;
+			case 3000:
+				res = 3000;
+				break;
+			case 4:
+				res = 4000;
+				break;
+			case 5:
+				res = 5000;
+				break;
+		}
+	
+		return res;
+	}
+
     const ColorTheme = oParams.ColorTheme.substr(0,6);
+    const oEffectFadeDelay = parseDelayFloat(oParams.EffectFadeDelay);
     const oHorizontalPosition = oParams.HorizontalPosition.toLowerCase();
     const oVerticalPosition = oParams.VerticalPosition.toLowerCase();
     const oUseTitleAsImage = oParams.UseTitleAsImage.toLowerCase();
     const oUseArtwork = oParams.UseArtwork.toLowerCase();
 
-    //Change Window Attributes
+	//-----------------------------------------------------------------------------------//
+	// Manipulação da janela original (remover ou ocultar)
+	//-----------------------------------------------------------------------------------//
+	
 	let windowAttrs = Scene_Title.prototype.create;
 
     Scene_Title.prototype.create = function() {
@@ -218,13 +282,6 @@
         this._commandWindow._contentsBackSprite.alpha = 0;
     }
 	
-	/*timeBG = document.createElement('img');
-	timeBG.src = "wg_menu/img/unnamed2.jpg";
-	document.body.appendChild(timeBG);
-	timeBG.style.position = 'absolute';
-	timeBG.style.zIndex = '99999';
-	timeBG.setAttribute("id", "buttontestimg");*/
-
 	//-----------------------------------------------------------------------------------//
 	// Cria os elementos que compõem o menu principal
 	//-----------------------------------------------------------------------------------//
