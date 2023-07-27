@@ -298,7 +298,7 @@
 	var oMenuStyle_variation = oMenuStyle.trim().replace(' ','');
 
 	//Menu style | Vertical Cascade (Ascendent and Descendent)
-	var cssProps_verticalcascade = '';
+	var cssProps_verticalcascade_styleArray = '';
 
 	if(oMenuStyle.split(' ').length > 2){
 		oMenuStyle_variation = 'verticalcascade_' + countMenuStyle[2];
@@ -306,16 +306,16 @@
 		function cssSpc_verticalcascade(){
 			let cssSpc_verticalcascadeArr = [];
 			
-			for(let i = 0; i < oMenuStyle.split(' ').length; i++){
+			for(let i = oMenuStyle.split(' ').length; i > 0; i--){
 				cssSpc_verticalcascadeArr.push(`
-					#MainMenuWrapper.oMenuStyle--` + oMenuStyle_variation + ` > .mm_option:nth-child(` + (i + 1) + `)
+					#MainMenuWrapper.oMenuStyle--` + oMenuStyle_variation + ` > .mm_option:nth-child(` + (i) + `)
 					{
 						margin-left: ` + (i) + `em;
 					}
 				`);
 			}
 			
-			cssProps_verticalcascade = cssSpc_verticalcascadeArr.join('\n');
+			cssProps_verticalcascade_styleArray = cssSpc_verticalcascadeArr.join('\n');
 		}
 		
 		cssSpc_verticalcascade();
@@ -487,18 +487,16 @@
 		#MainMenuWrapper.oMenuStyle--verticalcascade_ascendent
 		{
 			flex-direction: column;
-			
-			`
-			
-			+
-			
-			cssProps_verticalcascade
-			
-			+
-			
-			`
 		}
-		
+		`
+
+		+
+
+		cssProps_verticalcascade_styleArray
+
+		+
+
+		`
 		/*-----------------------------------------------------------------------------------*/
 		/* Alignment Classes
 		/*-----------------------------------------------------------------------------------*/
@@ -700,7 +698,7 @@
 
 		function outputsize() {
 			//Get all gameCanvas style properties
-			let sizeOffset = '36'; //36px
+			let sizeOffset = '0'; // default = 36px
 			let canvasStyleCSS = gameCanvas.style.cssText;
 			
 			//Apply CSS to "MainMenuContainer" from "gameCanvas" and remove unnecessary properties
