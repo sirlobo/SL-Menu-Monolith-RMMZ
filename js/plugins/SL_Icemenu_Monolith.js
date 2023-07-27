@@ -239,6 +239,13 @@
 	// Manipulação da janela original (remover ou ocultar)
 	//-----------------------------------------------------------------------------------//
 	
+	//Desabilita a interação no canvas original para evitar conflitos
+	setTimeout(function(){
+		document.querySelector('#gameCanvas').classList.add('#gameCanvasSub');
+	},350);
+	
+	//
+	
 	let windowAttrs = Scene_Title.prototype.create;
 
     Scene_Title.prototype.create = function() {
@@ -247,7 +254,7 @@
         this._commandWindow.opacity = 0;
         this._commandWindow.width = Graphics.width / 2;
 
-        switch(oVerticalPosition)
+        /*switch(oVerticalPosition)
         {
             case 1:
                 this._commandWindow.y = this._commandWindow.width / 2 + 52;
@@ -274,7 +281,7 @@
            default:
                 this._commandWindow.x = Graphics.width / 2 / 2;
                 break;
-		}
+		}*/
 
 		this._commandWindow.windowskin = ImageManager.loadSystem(wgpath + "img/menu_window");
         
@@ -294,7 +301,7 @@
 	//Adiciona as classes necessárias
 	let mm_wrapper_classes_align_v = 'alignment__vertical--bottom'; //default vertical
 	let mm_wrapper_classes_align_h = 'alignment__horizontal--left'; //default horizontal
-	
+
 	el_wrapperDiv.classList.add('mmDisabled');
 	
 	//Verifica os parâmetros de posicionamento para adicionar as classes corretas (vertical e horizontal)
@@ -379,6 +386,12 @@
 	//Adição do menu suspenso
 	const mmCss = `
 		<style>
+		#gameCanvasSub
+		{
+			user-select: none!important;
+			pointer-events: none!important;
+		}
+		
 		.loaded button
 		{
 			display: initial!important;
@@ -396,8 +409,10 @@
 			padding: 0;
 			
 			/*background: rgb(0 0 0 / 25%);*/
+			/*background: black;*/
 			
-			background: black;
+			background: none;
+			
 			border: 2px solid yellow;
 		}
 		
@@ -485,7 +500,7 @@
 		{
 			display: none;
 			transition: 0.2s;
-			animation: fadeIn ` + EffectFadeDelay +`s;
+			animation: fadeIn ` + oEffectFadeDelay +`s;
 		}
 		
 		.mm_option.mmDisabled
