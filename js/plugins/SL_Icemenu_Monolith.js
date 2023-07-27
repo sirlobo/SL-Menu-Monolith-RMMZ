@@ -283,7 +283,10 @@
 		
 		/* Alignment Classes */
 		
-		align-items: baseline;
+		.Alignment_Vertical_Top
+		{
+			align-items: flex-start;
+		}
 		
 		/* Alignment Classes */
 		
