@@ -706,7 +706,7 @@
 
 	//Listener de redimensionamento do game canvas
 	setTimeout(function(){
-		let gameCanvas = document.querySelector('#gameCanvas');
+		let gameCanvas = document.querySelector('#gameVideo');
 		let menuContainer = document.querySelector('#MainMenuContainer');
 
 		function outputsize() {
@@ -719,6 +719,7 @@
 			menuContainer.style.removeProperty('position');
 			menuContainer.style.removeProperty('cursor');
 			menuContainer.style.removeProperty('z-index');
+			menuContainer.style.removeProperty('opacity');
 			
 			//Apply the offset values to width and height got from gameCanvas CSS style
 			let gameCanvas_W = menuContainer.style.width;
