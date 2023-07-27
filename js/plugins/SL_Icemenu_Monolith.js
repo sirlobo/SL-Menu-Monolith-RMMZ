@@ -622,6 +622,11 @@
 			pointer-events: none!important;
 			filter: grayscale(0.5) brightness(0.75);
 			opacity: 0.8;
+		}	
+		
+		.mm_option.mmDisabled:hover
+		{
+			cursor: not-allowed;
 		}
 		
 		/**/
