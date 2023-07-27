@@ -620,8 +620,10 @@
 		{
 			user-select: none!important;
 			pointer-events: none!important;
-			filter: grayscale(0.5) brightness(0.75);
-			opacity: 0.8;
+			filter: grayscale(0.75) brightness(0.7);
+			opacity: 0.6;
+			
+			color: rgba(255, 255, 255, 0.25)!important;
 		}	
 		
 		.mm_option.mmDisabled:hover
