@@ -76,16 +76,6 @@
  * @default 2
  * @desc Set vertical position of the menu
  *
- * @param menuDelayFactor
- * @text Fator de Delay
- * @type select
- * @option 500ms
- * @value 500
- * @option 350ms
- * @value 350
- * @default 350
- * @desc Seta o delay de aparecimento do menu. É recomendado alterar esta propriedade APENAS se houverem glitches visuais.
- *
  * -------------------------------------------------------------------------
  * @help
  //=========================================================================
@@ -143,14 +133,12 @@
         HorizontalPosition: String(parameters['HorizontalPosition']),
         VerticalPosition: String(parameters['VerticalPosition']),
         UseTitleAsImage: String(parameters['UseTitleAsImage']),
-        menuDelayFactor: String(parameters['menuDelayFactor']),
         UseArtwork: String(parameters['UseArtwork'])
     };
 
     const ColorTheme = oParams.ColorTheme.substr(0,6);
     const oHorizontalPosition = parseInt(oParams.HorizontalPosition);
     const oVerticalPosition = parseInt(oParams.VerticalPosition);
-    const menuDelayFactor = parseInt(oParams.menuDelayFactor);
     const oUseTitleAsImage = parseInt(oParams.UseTitleAsImage);
     const oUseArtwork = parseInt(oParams.UseArtwork);
 
@@ -245,6 +233,9 @@
 			if(!DataManager.isAnySavefileExists())
 				el.classList.add('mmDisabled');
 		};
+		
+		el_wrapperDiv.classList.remove('mmDisabled');
+		el_wrapperDiv.classList.add('loaded');
 	}
 	
 	//Inicia as configurações essenciais para o funcionamento do menu
@@ -280,6 +271,14 @@
 			padding: 1em;
 			margin: 0;
 			margin-top: auto!important;
+			margin-top: initial;
+			margin-left: initial;
+		}
+		
+		@keyframes fadeIn
+		{
+			from{opacity: 0;}
+			to{opacity: 1;}
 		}
 
 		.mm_option
@@ -307,6 +306,7 @@
 		{
 			display: none;
 			transition: 0.2s;
+			animation: fadeIn 1.5s;
 		}
 		
 		.mm_option.mmDisabled
@@ -398,6 +398,31 @@
                 break;
 		}
     };
+	
+	//Listener do canvas
+	function onResizeGameCanvas(el, callback){
+	  var elementHeight = el.height,
+		  elementWidth = el.width;
+	  setInterval(function(){
+		  if( el.height !== elementHeight || el.width !== elementWidth ){
+			elementHeight = el.height;
+			elementWidth = el.width;
+			callback();
+		  }
+	  }, 300);
+	}
+	
+	let gameCanvas = null;
+	
+	setTimeout(function(){
+		gameCanvas = document.querySelector('#gameCanvas');
+
+		onResizeGameCanvas(gameCanvas, function(){
+			alert("Woo!");
+		});
+	}, 350);
+	
+	/**/
 
 
 	//--------------------------BUG---------------------------------------//
