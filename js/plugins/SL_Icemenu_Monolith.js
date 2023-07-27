@@ -175,7 +175,7 @@
 (() => {
     //Plugin Info & Settings
     const pluginName = "WG Ice Menu";
-    const wgpath = '../../js/plugins/SL_Icemenu_Monolith/';
+    const slpath = '../../js/plugins/SL_Icemenu_Monolith/';
 
 	//-----------------------------------------------------------------------------------//
 	// Define e configura os parâmetros
@@ -256,7 +256,7 @@
 		this._commandWindow.x = -2000;
 		this._commandWindow.y = -2000;
 
-		this._commandWindow.windowskin = ImageManager.loadSystem(wgpath + "img/menu_window");
+		this._commandWindow.windowskin = ImageManager.loadSystem(slpath + "img/menu_window");
         
         //Remove Content BackSprite
         this._commandWindow._contentsBackSprite.alpha = 0;
@@ -267,15 +267,15 @@
 	//-----------------------------------------------------------------------------------//
 	
 	//Cria o WRAPPER principal do menu
-	el_wrapperDiv = document.createElement('div');
-	document.body.appendChild(el_wrapperDiv);
-	el_wrapperDiv.setAttribute('id', 'MainMenuWrapper');
+	elementHTML_wrapper = document.createElement('div');
+	document.body.appendChild(elementHTML_wrapper);
+	elementHTML_wrapper.setAttribute('id', 'MainMenuWrapper');
 	
 	//Adiciona as classes necessárias
 	let mm_wrapper_classes_align_v = 'alignment__vertical--bottom'; //default vertical
 	let mm_wrapper_classes_align_h = 'alignment__horizontal--left'; //default horizontal
 
-	el_wrapperDiv.classList.add('mmDisabled');
+	elementHTML_wrapper.classList.add('mmDisabled');
 	
 	//Verifica os parâmetros de posicionamento para adicionar as classes corretas (vertical e horizontal)
 	switch(oVerticalPosition)
@@ -308,15 +308,15 @@
 	}
 	
 	//Adiciona as classes de posicionamento obtidas para setar a posição do menu
-	el_wrapperDiv.classList.add(mm_wrapper_classes_align_v);
-	el_wrapperDiv.classList.add(mm_wrapper_classes_align_h);
+	elementHTML_wrapper.classList.add(mm_wrapper_classes_align_v);
+	elementHTML_wrapper.classList.add(mm_wrapper_classes_align_h);
 	
 	function createMenuOptionButton(elName, buttonContentText){
 		let hash = 'mm_' + elName;
 		
 		el = document.createElement('button');
 		
-		el_wrapperDiv.appendChild(el);
+		elementHTML_wrapper.appendChild(el);
 		el.setAttribute('id', hash);
 		el.setAttribute('class', 'mm_option');
 		el.innerText = buttonContentText;
@@ -333,12 +333,8 @@
 
 		const _Window_TitleCommand_makeCommandList = Window_TitleCommand.prototype.makeCommandList;
 		
+		//Desabilita o menu original
 		Window_TitleCommand.prototype.makeCommandList = function() {
-			//Desabilita o menu original
-			/*_Window_TitleCommand_makeCommandList.call(this);
-			this.addCommand('Novo Jogo', 'newGame');
-			this.addCommand('Continuar', 'continue', DataManager.isAnySavefileExists());
-			this.addCommand('Opções', 'options');*/
 			
 			//Verifica se há um arquivo de salvamento para a opção de CONTINUE
 			if(!DataManager.isAnySavefileExists())
@@ -346,8 +342,8 @@
 		};
 		
 		setTimeout(function(){
-			el_wrapperDiv.classList.remove('mmDisabled');
-			el_wrapperDiv.classList.add('loaded');
+			elementHTML_wrapper.classList.remove('mmDisabled');
+			elementHTML_wrapper.classList.add('loaded');
 		}, 300);
 	}
 	
@@ -490,7 +486,7 @@
 	document.head.insertAdjacentHTML('beforeend', mmCss);
 	
 	//Habilita o wrapper do menu para interação
-	el_wrapperDiv.classList.remove('mmDisabled');
+	elementHTML_wrapper.classList.remove('mmDisabled');
 
 	//-----------------------------------------------------------------------------------//
 	// Funções das opções
@@ -527,6 +523,13 @@
 		else
 			el.classList.add('mmDisabled');
 	}
+	
+	//-----------------------------------------------------------------------------------//
+	// Configura a gamelogo
+	//-----------------------------------------------------------------------------------//
+	
+	const gamelogo_filename = slpath + 'gamelogo.png';
+	// const HTML_IMG_logo = gamelogo_filename;
 	
 	//-----------------------------------------------------------------------------------//
 	// Listeners
@@ -596,7 +599,6 @@
 		new ResizeObserver(outputsize).observe(gameCanvas);
 	}, 300);
 
-
 	//--------------------------BUG---------------------------------------//
 	
     //Cursor BackSprite Width
@@ -658,16 +660,15 @@
 		}
         else
         {
-            return wgpath + "fonts/" + oParams.CustomFont + ".ttf";
+            return slpath + "fonts/" + oParams.CustomFont + ".ttf";
 		}
     };
-
-    
+	
     /**/
 
     Scene_Title.prototype.UISprites= function(filename, xPos, yPos) {
         this._mPic = new Sprite();
-        this._mPic.bitmap = ImageManager.loadSystem(wgpath + "img/" + filename);
+        this._mPic.bitmap = ImageManager.loadSystem(slpath + "img/" + filename);
         this._mPic.x = xPos;
         this._mPic.y = yPos;
         this.addChild(this._mPic);
