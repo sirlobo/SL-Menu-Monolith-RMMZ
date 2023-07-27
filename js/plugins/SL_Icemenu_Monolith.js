@@ -129,6 +129,19 @@
  * @default Bottom
  * @desc Set VERTICAL position of the menu
  *
+ *
+ * @param LogoPosition
+ * @text Vertical position
+ * @parent MainSettings
+ * @type select
+ * @option Top
+ * @value Top
+ * @option Center
+ * @value Center
+ * @option Bottom
+ * @value Bottom
+ * @default Bottom
+ * @desc Set "gamelogo" position of the menu (the position are relative to the position menu)
  * -------------------------------------------------------------------------
  * @help
  //=========================================================================
