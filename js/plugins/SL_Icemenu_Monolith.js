@@ -173,9 +173,18 @@
 */
 
 (() => {
-    //Plugin Info & Settings
-    const pluginName = "WG Ice Menu";
-    const slpath = '../../js/plugins/SL_Icemenu_Monolith/';
+	//-----------------------------------------------------------------------------------//
+	// Inicia o plugin e configura o essencial
+	//-----------------------------------------------------------------------------------//
+	
+    const pluginName = "SL Icemenu Monolith";
+	let subfolder = 'teste';
+	alert((typeof subfolder === 'string' && subfolder.length === 0));
+    const slpath = function(subfolder){
+		let plugin_path_rel = '../../js/plugins/SL_Icemenu_Monolith/';
+		
+		// return (typeof subfolder === 'string' && subfolder.length === 0) ? plugin_path_rel : plugin_path_rel + subfolder + '/';
+	}
 
 	//-----------------------------------------------------------------------------------//
 	// Define e configura os parâmetros
@@ -314,12 +323,12 @@
 	function createMenuOptionButton(elName, buttonContentText){
 		let hash = 'mm_' + elName;
 		
-		el = document.createElement('button');
+		let elementHTML_optBtn = document.createElement('button');
 		
-		elementHTML_wrapper.appendChild(el);
-		el.setAttribute('id', hash);
-		el.setAttribute('class', 'mm_option');
-		el.innerText = buttonContentText;
+		elementHTML_wrapper.appendChild(elementHTML_optBtn);
+		elementHTML_optBtn.setAttribute('id', hash);
+		elementHTML_optBtn.setAttribute('class', 'mm_option');
+		elementHTML_optBtn.innerText = buttonContentText;
 	}
 	
 	//Cria os botões com as opções do menu padrão (Novo Jogo, Continue, Opções)
@@ -479,10 +488,17 @@
 			filter: grayscale(0.5) brightness(0.75);
 			opacity: 0.8;
 		}
+		
+		/**/
+		
+		.mm_gamelogo
+		{
+			display: block;
+		}
 		</style>
 	`;
 
-	//Insere o HTML e o CSS criado na área e renderização
+	//Insere o CSS criado na área de renderização
 	document.head.insertAdjacentHTML('beforeend', mmCss);
 	
 	//Habilita o wrapper do menu para interação
@@ -528,8 +544,20 @@
 	// Configura a gamelogo
 	//-----------------------------------------------------------------------------------//
 	
-	const gamelogo_filename = slpath + 'gamelogo.png';
-	// const HTML_IMG_logo = gamelogo_filename;
+	const gamelogo_filename = slpath + slpath_img + 'gamelogo.png';
+
+	function createGamelogo(){
+		let elementID = 'mm_' + 'gamelogo_main';
+		
+		elementHTML_imgLogo = document.createElement('img');
+		
+		elementHTML_wrapper.appendChild(elementHTML_imgLogo);
+		elementHTML_imgLogo.setAttribute('id', elementID);
+		elementHTML_imgLogo.setAttribute('class', 'mm_gamelogo');
+		elementHTML_imgLogo.setAttribute('src', gamelogo_filename);
+	}
+	
+	createGamelogo(); //Executa o método responsável por criar o elemento <img> que abrigará a gamelogo
 	
 	//-----------------------------------------------------------------------------------//
 	// Listeners
