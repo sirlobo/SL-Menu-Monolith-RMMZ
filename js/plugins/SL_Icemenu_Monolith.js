@@ -135,12 +135,12 @@
  * @parent MainSettings
  * @type select
  * @option Vertical Aligned
- * @value 0
+ * @value verticalaligned
  * @option Horizontal Centered
- * @value 1
+ * @value horizontalaligned
  * @option Vertical Cascade
- * @value 2
- * @default 0
+ * @value verticalcascade
+ * @default verticalaligned
  * @desc Set the menu style elements
  * -------------------------------------------------------------------------
  * @help
@@ -213,6 +213,7 @@
         ColorTheme: String(parameters['ColorTheme']),
         HorizontalPosition: String(parameters['HorizontalPosition']),
         VerticalPosition: String(parameters['VerticalPosition']),
+        MenuStyle: String(parameters['MenuStyle']),
         UseTitleAsImage: String(parameters['UseTitleAsImage']),
         UseArtwork: String(parameters['UseArtwork'])
     };
@@ -256,6 +257,7 @@
     const oEffectFadeDelay = parseDelayFloat(oParams.EffectFadeDelay);
     const oHorizontalPosition = oParams.HorizontalPosition.toLowerCase();
     const oVerticalPosition = oParams.VerticalPosition.toLowerCase();
+    const oMenuStyle = oParams.MenuStyle.toLowerCase();
     const oUseTitleAsImage = oParams.UseTitleAsImage.toLowerCase();
     const oUseArtwork = oParams.UseArtwork.toLowerCase();
 
@@ -299,6 +301,7 @@
 	elementHTML_wrapper = document.createElement('div');
 	elementHTML_container.appendChild(elementHTML_wrapper);
 	elementHTML_wrapper.setAttribute('id', 'MainMenuWrapper');
+	elementHTML_wrapper.setAttribute('class', 'oMenuStyle--' + oMenuStyle);
 	
 	//Adiciona as classes necessárias
 	let mm_container_classes_align_v = 'alignment__vertical--bottom'; //default vertical
@@ -346,7 +349,7 @@
 		
 		let elementHTML_optBtn = document.createElement('button');
 		
-		elementHTML_container.appendChild(elementHTML_optBtn);
+		elementHTML_wrapper.appendChild(elementHTML_optBtn);
 		elementHTML_optBtn.setAttribute('id', hash);
 		elementHTML_optBtn.setAttribute('class', 'mm_option');
 		elementHTML_optBtn.innerText = buttonContentText;
@@ -421,11 +424,32 @@
 			display: flex;
 			width: 50%;
 			height: auto;
-			padding: 1em;
 			margin: 0;
 			margin-top: auto!important;
 			margin-top: initial;
 			margin-left: initial;
+		}	
+		
+		#MainMenuWrapper
+		{
+			display: flex;
+			background: black;
+			width: 35%;
+		}
+		
+		#MainMenuWrapper.oMenuStyle--verticalaligned
+		{
+			flex-direction: column;
+		}	
+		
+		#MainMenuWrapper.oMenuStyle--verticalcascade
+		{
+			flex-direction: column;
+		}	
+		
+		#MainMenuWrapper.oMenuStyle--horizontalaligned
+		{
+			flex-direction: column;
 		}
 		
 		/*-----------------------------------------------------------------------------------*/
