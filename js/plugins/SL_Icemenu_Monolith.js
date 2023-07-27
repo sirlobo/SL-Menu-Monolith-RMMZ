@@ -24,59 +24,88 @@
 
 /*:
  * @plugindesc SL Icemenu Monolith (Old "WG Icemenu v1.0") | Custom Menu for RMMV/RMMZ
- * 
+ *
+ *
  * @author Sir Lobo (Alex Lupóz)
  *
+ *
+ * @param MainSettings
+ * @text Main Settings
+ *
+ *
+ * @param OtherPreferences
+ * @text Other preferences
+ *
+ *
  * @param CustomFont
- * @text Font Name
- * @desc Put your custom font on wg_menu/fonts/ and type here the name exactly as it is there
+ * @text Font name
+ * @parent OtherPreferences
+ * @dir js/plugins/SL_Icemenu_Monolith/fonts/
+ * @desc Please, see the ITEM #1 at README.txt to know how you can configure
  * @default Zector
+ *
  *
  * @param ColorTheme
  * @text Primary Theme Color (Hex)
+ * @parent MainSettings
  * @type text
  * @default 3e759c
  * @desc Change the primary color of the selectors (needs to be a hexadecimal color. Just numbers, 3 or 6 characters)
  *
+ *
  * @param UseArtwork
- * @type select
- * @option Yes
- * @value 0
- * @option No
- * @value 1
- * @default 0
+ * @text Use float artwork
+ * @parent MainSettings
+ * @type boolean
+ * @default true
  * @desc Allow to use 'artwork.png' on screen
  *
+ *
  * @param UseTitleAsImage
- * @type select
- * @option Yes
- * @value 0
- * @option No
- * @value 1
- * @default 0
- * @desc Allow to use 'gamelogo.png' instead title text
+ * @text Image as title
+ * @type boolean
+ * @parent OtherPreferences
+ * @default true
+ * @desc Allow to use 'gamelogo.png' instead default title with text
+ *
+ *
+ * @param EffectFadeDelay
+ * @parent OtherPreferences
+ * @text Delay on start
+ * @type number
+ * @min 300
+ * @max 5000
+ * @decimals 4
+ * @default 300
+ * @desc Delay time in milliseconds (Min: 300, Max: 5000)
+ *
  *
  * @param HorizontalPosition
+ * @text Horizontal position
+ * @parent MainSettings
  * @type select
  * @option Left
- * @value 0
+ * @value Left
  * @option Center
- * @value 1
+ * @value Center
  * @option Right
- * @value 2
- * @default 2
- * @desc Set horizontal position of the menu
+ * @value Right
+ * @default Left
+ * @desc Set HORIZONTAL position of the menu
+ *
  *
  * @param VerticalPosition
+ * @text Vertical position
+ * @parent MainSettings
  * @type select
  * @option Top
- * @value 0
+ * @value Top
  * @option Center
- * @value 1
+ * @value Center
  * @option Bottom
- * @value 2
- * @default 2
- * @desc Set vertical position of the menu
+ * @value Bottom
+ * @default Bottom
+ * @desc Set VERTICAL position of the menu
  *
  * -------------------------------------------------------------------------
  * @help
@@ -131,6 +160,7 @@
 
     const oParams = {
         CustomFont: String(parameters['CustomFont']),
+        EffectFadeDelay: String(parameters['EffectFadeDelay']),
         ColorTheme: String(parameters['ColorTheme']),
         HorizontalPosition: String(parameters['HorizontalPosition']),
         VerticalPosition: String(parameters['VerticalPosition']),
@@ -139,10 +169,10 @@
     };
 
     const ColorTheme = oParams.ColorTheme.substr(0,6);
-    const oHorizontalPosition = parseInt(oParams.HorizontalPosition);
-    const oVerticalPosition = parseInt(oParams.VerticalPosition);
-    const oUseTitleAsImage = parseInt(oParams.UseTitleAsImage);
-    const oUseArtwork = parseInt(oParams.UseArtwork);
+    const oHorizontalPosition = oParams.HorizontalPosition.toLowerCase();
+    const oVerticalPosition = oParams.VerticalPosition.toLowerCase();
+    const oUseTitleAsImage = oParams.UseTitleAsImage.toLowerCase();
+    const oUseArtwork = oParams.UseArtwork.toLowerCase();
 
     //Change Window Attributes
 	let windowAttrs = Scene_Title.prototype.create;
@@ -205,50 +235,46 @@
 	el_wrapperDiv.setAttribute('id', 'MainMenuWrapper');
 	
 	//Adiciona as classes necessárias
-	let mm_wrapper_classes_align_v = '';
-	let mm_wrapper_classes_align_h = '';
+	let mm_wrapper_classes_align_v = 'alignment__vertical--bottom'; //default vertical
+	let mm_wrapper_classes_align_h = 'alignment__horizontal--left'; //default horizontal
 	
 	el_wrapperDiv.classList.add('mmDisabled');
 	
 	//Verifica os parâmetros de posicionamento para adicionar as classes corretas (vertical e horizontal)
 	switch(oVerticalPosition)
 	{
-		case 0:
+		case 'top':
 			mm_wrapper_classes_align_v = 'alignment__vertical--top';
 			break;
-		case 1:
+		case 'center':
 			mm_wrapper_classes_align_v = 'alignment__vertical--center';
 			break;
-		case 2:
+		case 'bottom':
 			mm_wrapper_classes_align_v = 'alignment__vertical--bottom';
 			break;
 	   default:
-			mm_wrapper_classes_align_v = 'alignment__vertical--bottom';
+			mm_wrapper_classes_align_v = '';
 			break;
 	}
 
 	switch(oHorizontalPosition)
 	{
-		case 0:
+		case 'left':
 			mm_wrapper_classes_align_h = 'alignment__horizontal--left';
 			break;
-		case 1:
+		case 'center':
 			mm_wrapper_classes_align_h = 'alignment__horizontal--center';
 			break;
-		case 2:
+		case 'right':
 			mm_wrapper_classes_align_h = 'alignment__horizontal--right';
-			break;
-	   default:
-			mm_wrapper_classes_align_h = 'alignment__horizontal--left';
 			break;
 	}
 	
-	//Adiciona as classes de posicionamento obtidas
-	el_wrapperDiv.classList.add('mmDisabled');
-	el_wrapperDiv.classList.add('mmDisabled');
+	//Adiciona as classes de posicionamento obtidas para setar a posição do menu
+	el_wrapperDiv.classList.add(mm_wrapper_classes_align_v);
+	el_wrapperDiv.classList.add(mm_wrapper_classes_align_h);
 	
 	function createMenuOptionButton(elName, buttonContentText){
-		// let hash = 'mm_' + elName + '_' + Math.floor(Math.random() * Math.floor(Math.random() * Date.now()));
 		let hash = 'mm_' + elName;
 		
 		el = document.createElement('button');
@@ -282,8 +308,10 @@
 				el.classList.add('mmDisabled');
 		};
 		
-		el_wrapperDiv.classList.remove('mmDisabled');
-		el_wrapperDiv.classList.add('loaded');
+		setTimeout(function(){
+			el_wrapperDiv.classList.remove('mmDisabled');
+			el_wrapperDiv.classList.add('loaded');
+		}, 300);
 	}
 	
 	//Inicia as configurações essenciais para o funcionamento do menu
@@ -400,7 +428,7 @@
 		{
 			display: none;
 			transition: 0.2s;
-			animation: fadeIn 1.5s;
+			animation: fadeIn ` + EffectFadeDelay +`s;
 		}
 		
 		.mm_option.mmDisabled
@@ -524,7 +552,7 @@
 		outputsize();
 
 		new ResizeObserver(outputsize).observe(gameCanvas);
-	}, 350);
+	}, 300);
 	
 	/**/
 
