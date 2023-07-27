@@ -458,7 +458,10 @@
 			
 			background: none;
 			
-			/*border: 2px solid yellow;*//*debug resize container based on canvas */
+			/*debug resize container based on canvas. Just uncomment bellow */
+			/*
+			border: 2px solid yellow;
+			*/
 		}
 		
 		#MainMenuContainer.loaded
