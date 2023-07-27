@@ -37,6 +37,10 @@
  * @text Other preferences
  *
  *
+ * @param ImageLogoAdjustments
+ * @text Image logo adjustments
+ *
+ *
  * @param CustomFont
  * @text Font name
  * @parent OtherPreferences
@@ -56,6 +60,7 @@
  * @param UseArtwork
  * @text Use float artwork
  * @parent MainSettings
+ * @parent MainSettings
  * @type boolean
  * @default true
  * @desc Allow to use 'artwork.png' on screen
@@ -64,9 +69,17 @@
  * @param UseTitleAsImage
  * @text Image as title
  * @type boolean
- * @parent OtherPreferences
+ * @parent ImageLogoAdjustments
  * @default true
  * @desc Allow to use 'gamelogo.png' instead default title with text
+ *
+ *
+ * @param GameLogoFixedWidth
+ * @text Game logo width
+ * @type number
+ * @parent ImageLogoAdjustments
+ * @default 402
+ * @desc The width (px) of "gamelogo.png". If you decide to use an image with a different size in width, update this value
  *
  *
  * @param EffectFadeDelay
@@ -144,6 +157,8 @@
  * @value Vertical Cascade Descendent
  * @default Vertical Aligned
  * @desc Set the menu style elements
+ *
+ *
  * -------------------------------------------------------------------------
  * @help
  //=========================================================================
@@ -211,6 +226,7 @@
 
     const oParams = {
         CustomFont: String(parameters['CustomFont']),
+        GameLogoFixedWidth: String(parameters['GameLogoFixedWidth']),
         EffectFadeDelay: String(parameters['EffectFadeDelay']),
         ColorTheme: String(parameters['ColorTheme']),
         HorizontalPosition: String(parameters['HorizontalPosition']),
@@ -257,6 +273,7 @@
 
     const ColorTheme = oParams.ColorTheme.substr(0,6);
     const oEffectFadeDelay = parseDelayFloat(oParams.EffectFadeDelay);
+    const oGameLogoFixedWidth = oParams.GameLogoFixedWidth.toLowerCase();
     const oHorizontalPosition = oParams.HorizontalPosition.toLowerCase();
     const oVerticalPosition = oParams.VerticalPosition.toLowerCase();
     const oMenuStyle = oParams.MenuStyle.toLowerCase();
@@ -336,10 +353,10 @@
 	elementHTML_container.setAttribute('id', 'MainMenuContainer');
 	
 	//Cria o wrapper dos botões da navegação
-	elementHTML_wrapper = document.createElement('div');
-	elementHTML_container.appendChild(elementHTML_wrapper);
-	elementHTML_wrapper.setAttribute('id', 'MainMenuWrapper');
-	elementHTML_wrapper.setAttribute('class', 'oMenuStyle--' + oMenuStyle_variation);
+	elementHTML_wrapperButtons = document.createElement('div');
+	elementHTML_container.appendChild(elementHTML_wrapperButtons);
+	elementHTML_wrapperButtons.setAttribute('id', 'MainMenuWrapper');
+	elementHTML_wrapperButtons.setAttribute('class', 'oMenuStyle--' + oMenuStyle_variation);
 	
 	//Adiciona as classes necessárias
 	let mm_container_classes_align_v = 'alignment__vertical--bottom'; //default vertical
@@ -389,7 +406,7 @@
 		
 		let elementHTML_optBtn = document.createElement('button');
 		
-		elementHTML_wrapper.appendChild(elementHTML_optBtn);
+		elementHTML_wrapperButtons.appendChild(elementHTML_optBtn);
 		elementHTML_optBtn.setAttribute('id', hash);
 		elementHTML_optBtn.setAttribute('class', 'mm_option');
 		elementHTML_optBtn.innerText = buttonContentText;
@@ -596,17 +613,25 @@
 		}
 		
 		/**/
-		
+
+		.mm_gamelogo_wrapper
+		{
+			width: ` + oGameLogoFixedWidth + `px;
+
+			background: orangered;
+		}
+
 		.mm_gamelogo
 		{
-			display: block;
 			position: absolute;
 			top: 0;
-			left: 0;
 			right: 0;
 			bottom: 0;
+			left: 0;
+			
 			width: 100%;
-			max-width: fit-content;
+			max-width: 50%;
+			height: auto;
 		}
 		</style>
 	`;
@@ -661,10 +686,16 @@
 
 	function createGamelogo(){
 		let elementID = 'mm_' + 'gamelogo_main';
-		
+
+		//Cria e configura o wrapper da imagem
+		elementHTML_imgLogoDivWrapper = document.createElement('div');
+		elementHTML_imgLogoDivWrapper.setAttribute('class', 'mm_gamelogo_wrapper');
+		elementHTML_container.appendChild(elementHTML_imgLogoDivWrapper);
+
+		//Cria e configura o elemento da imagem da gamelogo
 		elementHTML_imgLogo = document.createElement('img');
-		
-		elementHTML_container.appendChild(elementHTML_imgLogo);
+		elementHTML_imgLogoDivWrapper.appendChild(elementHTML_imgLogo);
+
 		elementHTML_imgLogo.setAttribute('id', elementID);
 		elementHTML_imgLogo.setAttribute('class', 'mm_gamelogo');
 		elementHTML_imgLogo.setAttribute('src', gamelogo_filename);
@@ -716,7 +747,7 @@
 			//Get all gameCanvas style properties
 			let sizeOffset = '0'; // default = 36px
 			let canvasStyleCSS = gameCanvas.style.cssText;
-			
+
 			//Apply CSS to "MainMenuContainer" from "gameCanvas" and remove unnecessary properties
 			menuContainer.style.cssText = canvasStyleCSS;
 			menuContainer.style.removeProperty('position');
