@@ -450,7 +450,7 @@
 		<style>
 		#gameCanvasSub,
 		.mm_gamelogo,
-		#errorPrint
+		#errorPrinter
 		{
 			user-select: none!important;
 			pointer-events: none!important;
@@ -498,11 +498,12 @@
 		#MainMenuWrapper
 		{
 			display: flex;
-			background: black;
 			/*width: 35%;*/
 			/*width: calc(35% + 2em);*/
 			
 			width: 500px; /* fixed with*/
+			
+			/*background: black;*/
 		}
 		
 		/*-----------------------------------------------------------------------------------*/
@@ -592,18 +593,20 @@
 			padding: 0.5em;
 			border: 0;
 			transition: 0.1s;
-			margin: 0.5em 0;
+			margin: 0.25em 0;
 			width: calc(100% - 2em);
 			font-size: 1.5em;
 		}
 		
 		.mm_option:hover
 		{
-			filter: brightness(0.75);
+			filter: brightness(1.25);
 			transition: 0.1s;
 			
 			width: 100%;
 			/*transform: scale(1);*/
+			
+			cursor: pointer;
 		}
 		
 		#MainMenuContainer.mmDisabled
@@ -777,7 +780,7 @@
 			menuContainer.style.setProperty('height', 'calc(' + gameVideo_H + ' - ' + sizeOffset + 'px' + ')');
 
 			menuWrapper.style.setProperty('width', (parseInt(gameVideo_W) / 2) + 'px');
-			menuWrapper.style.setProperty('height', (parseInt(gameVideo_H) / 2) + 'px');
+			// menuWrapper.style.setProperty('height', (parseInt(gameVideo_H) / 2) + 'px');
 		}
 		
 		outputsize();
