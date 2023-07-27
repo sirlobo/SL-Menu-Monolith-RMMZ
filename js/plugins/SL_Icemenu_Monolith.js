@@ -504,6 +504,8 @@
 			left: 0;
 			bottom: 0;
 			right: auto;
+			
+			width: calc(100% / 2);
 		}
 		
 		/*-----------------------------------------------------------------------------------*/
@@ -801,10 +803,10 @@
 			menuContainer.style.setProperty('width', 'calc(' + gameVideo_W + ' - ' + sizeOffset + 'px' + ')');
 			menuContainer.style.setProperty('height', 'calc(' + gameVideo_H + ' - ' + sizeOffset + 'px' + ')');
 
-			if(parseInt(gameVideo_W) > parseInt(gameVideo_H))
+			/*if(parseInt(gameVideo_W) > parseInt(gameVideo_H))
 				menuWrapper.style.setProperty('width', (parseInt(gameVideo_W) / 2) + 'px');
 			else if(parseInt(gameVideo_W) < parseInt(gameVideo_H))
-				menuWrapper.style.setProperty('height', (parseInt(gameVideo_H) / 2) + 'px');
+				menuWrapper.style.setProperty('height', (parseInt(gameVideo_H) / 2) + 'px');*/
 		}
 		
 		outputsize();
