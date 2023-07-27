@@ -306,11 +306,11 @@
 		function cssSpc_verticalcascade(){
 			let cssSpc_verticalcascadeArr = [];
 			
-			for(let i = oMenuStyle.split(' ').length; i > 0; i--){
+			for(let i = oMenuStyle.split(' ').length; i > 1; i--){
 				cssSpc_verticalcascadeArr.push(`
 					#MainMenuWrapper.oMenuStyle--` + oMenuStyle_variation + ` > .mm_option:nth-child(` + (i) + `)
 					{
-						margin-left: ` + (i) + `em;
+						width: calc(100% - ` + (2.5 * i) + `em);
 					}
 				`);
 			}
@@ -472,7 +472,8 @@
 		{
 			display: flex;
 			background: black;
-			width: 35%;
+			/*width: 35%;*/
+			width: calc(35% + 2em);
 		}
 		
 		/*-----------------------------------------------------------------------------------*/
@@ -554,14 +555,19 @@
 			
 			transition: 0.1s;
 			
-			margin: 0.5em 0.25em;
+			/*margin: 0.5em 0.25em;*/
+			margin: 0.5em 0;
+			
+			/*transform: scale(0.8);*/
 		}
 		
 		.mm_option:hover
 		{
 			filter: brightness(0.75);
 			transition: 0.1s;
-			scale: 2;
+			
+			width: 100%;
+			/*transform: scale(1);*/
 		}
 		
 		#MainMenuContainer.mmDisabled
