@@ -1,12 +1,12 @@
 /*
 * =============================================================================
 * SL_Icemenu_Monolith.js
-* Version: v1.0.0
+* Version: v1.1.1
 * Language Version: Brazilian Portuguese (pt-BR)
 * =============================================================================
 
 * =============================================================================
-* LICENSE: CC BY 4.0
+* LICENSE: PERSONAL
 
 * > Attribution
 * You must give appropriate credit, provide a link to the license,
@@ -135,12 +135,12 @@
  * @parent MainSettings
  * @type select
  * @option Vertical Aligned
- * @value verticalaligned
+ * @value Vertical Aligned
  * @option Horizontal Centered
- * @value horizontalaligned
+ * @value Horizontal Centered
  * @option Vertical Cascade
- * @value verticalcascade
- * @default verticalaligned
+ * @value Vertical Cascade
+ * @default Vertical Aligned
  * @desc Set the menu style elements
  * -------------------------------------------------------------------------
  * @help
@@ -301,7 +301,7 @@
 	elementHTML_wrapper = document.createElement('div');
 	elementHTML_container.appendChild(elementHTML_wrapper);
 	elementHTML_wrapper.setAttribute('id', 'MainMenuWrapper');
-	elementHTML_wrapper.setAttribute('class', 'oMenuStyle--' + oMenuStyle);
+	elementHTML_wrapper.setAttribute('class', 'oMenuStyle--' + oMenuStyle.trim().replace(' ',''));
 	
 	//Adiciona as classes necessárias
 	let mm_container_classes_align_v = 'alignment__vertical--bottom'; //default vertical
@@ -343,6 +343,8 @@
 	elementHTML_container.classList.add(mm_container_classes_align_v);
 	elementHTML_container.classList.add(mm_container_classes_align_h);
 	
+	var buttonsArrayIndex = [];
+
 	//Método para criar os elementos de botões interativos do menu principal
 	function createMenuOptionButton(elName, buttonContentText){
 		let hash = 'mm_' + elName;
@@ -353,7 +355,11 @@
 		elementHTML_optBtn.setAttribute('id', hash);
 		elementHTML_optBtn.setAttribute('class', 'mm_option');
 		elementHTML_optBtn.innerText = buttonContentText;
+		
+		buttonsArrayIndex.push(elementHTML_optBtn);
 	}
+	
+	
 	
 	//Chama a função para cada um dos botões de opções (baseadas no menu padrão com as opções de "Novo Jogo", "Continuar", "Opções")
 	createMenuOptionButton('newGame', 'Novo Jogo');
@@ -382,10 +388,44 @@
 	
 	//Inicia as configurações essenciais para o funcionamento do menu
 	MenuInit();
+
+	//-----------------------------------------------------------------------------------//
+	// Condições especiais de classes
+	//-----------------------------------------------------------------------------------//
 	
-	/**/
+	/*
+	#MainMenuWrapper.oMenuStyle--verticalcascade_ ` + i + `
+	{
+	flex-direction: column;
+	}
+	*/
 	
-	//Adição do menu suspenso
+	//verticalcascade
+	var cssProps_verticalcascade = '';
+
+	function cssSpc_verticalcascade(){
+		let cssSpc_verticalcascadeArr = [];
+		
+		for(let i = 0; i < 3; i++){
+			cssSpc_verticalcascadeArr.push(`
+				#MainMenuWrapper.oMenuStyle--verticalcascade
+				{
+					flex-direction: column;
+				}
+			`);
+		}
+
+		setTimeout(function(){
+			cssProps_verticalcascade = cssSpc_verticalcascadeArr.join('\n');
+		}, 350);
+	}
+	
+	cssSpc_verticalcascade();
+	
+	//-----------------------------------------------------------------------------------//
+	// Adição do CSS
+	//-----------------------------------------------------------------------------------//
+
 	const mmCss = `
 		<style>
 		#gameCanvasSub
@@ -440,12 +480,20 @@
 		#MainMenuWrapper.oMenuStyle--verticalaligned
 		{
 			flex-direction: column;
-		}	
+		}
+		`
 		
-		#MainMenuWrapper.oMenuStyle--verticalcascade
+		+
+		
+		cssProps_verticalcascade
+		
+		+
+		
+		`
+		#MainMenuWrapper.oMenuStyle--verticalcascade > button:nth-child()
 		{
 			flex-direction: column;
-		}	
+		}
 		
 		#MainMenuWrapper.oMenuStyle--horizontalaligned
 		{
