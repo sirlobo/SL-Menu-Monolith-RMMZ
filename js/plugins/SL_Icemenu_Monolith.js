@@ -281,6 +281,12 @@
 			margin-left: initial;
 		}
 		
+		/* Alignment Classes */
+		
+		align-items: baseline;
+		
+		/* Alignment Classes */
+		
 		@keyframes fadeIn
 		{
 			from{opacity: 0;}
