@@ -486,29 +486,39 @@
 		</style>
 	`;
 
+	//Insere o HTML e o CSS criado na área e renderização
 	document.head.insertAdjacentHTML('beforeend', mmCss);
+	
+	//Habilita o wrapper do menu para interação
 	el_wrapperDiv.classList.remove('mmDisabled');
 
-	//Funções das opções
+	//-----------------------------------------------------------------------------------//
+	// Funções das opções
+	//-----------------------------------------------------------------------------------//
+	
+	//Novo novo
 	function FNewGame(el){
-		ToggleMainMenu();
+		ToggleMainMenu(); //Esconde o menu principal
 		SceneManager.goto(Scene_Map);
 	}
 	
+	//Continuar
 	function FContinueGame(el){
 		if (DataManager.isAnySavefileExists()) {
-			ToggleMainMenu();
-			SceneManager.push(Scene_Load);
+			ToggleMainMenu(); //Esconde o menu principal
+			SceneManager.push(Scene_Load); //Chama a cena de carregamento de saves
 		}else{
-			el.classList.add('mmDisabled');
+			el.classList.add('mmDisabled'); //Botão desabilitado caso não existe arquivo de save
 		}
 	}
 	
+	//Opções
 	function FOptions(el){
 		SceneManager.push(Scene_Options);
-		ToggleMainMenu();
+		ToggleMainMenu(); //Esconde o menu principal ao abrir o menu de opções do menu principal
 	}
 
+	//Alterna a visibilidade do menu quando necessário
 	function ToggleMainMenu(){
 		let el = document.querySelector('#MainMenuWrapper');
 		
@@ -517,7 +527,12 @@
 		else
 			el.classList.add('mmDisabled');
 	}
-
+	
+	//-----------------------------------------------------------------------------------//
+	// Listeners
+	//-----------------------------------------------------------------------------------//
+	
+	//Listener dos botões do menu (chamam um evento/script/função específico do próprio RMMZ )
 	document.querySelectorAll('.mm_option').forEach(item => {
 		item.addEventListener('click', event => {
 			var targetElement = event.target || event.srcElement;
@@ -540,33 +555,17 @@
 	
 	/**/
 	
-	//Ao fechar o menu de opções (menu principal)
+	//Ao fechar o menu de opções (menu principal), o menu é mostrado novamente
 	const _Scene_Options_popScene = Scene_Options.prototype.popScene;
 	
 	Scene_Options.prototype.popScene = function() {
 	  _Scene_Options_popScene.call(this); // Executa a ação padrão do fechamento do menu de opções
 	  ToggleMainMenu();
 	};
-	
+	wgpath
 	/**/
-	
-    //If horizontal align
-    Window_Command.prototype.itemTextAlign = function(){
-        switch(oHorizontalPosition)
-        {
-            case 0:
-                return 'left';
-                break;
-            case 2:
-                return 'right';
-                break;
-           default:
-                return 'center';
-                break;
-		}
-    };
-	
-	//Listener do canvas
+
+	//Listener de redimensionamento do game canvas
 	setTimeout(function(){
 		let gameCanvas = document.querySelector('#gameCanvas');
 		let menuWrapper = document.querySelector('#MainMenuWrapper');
