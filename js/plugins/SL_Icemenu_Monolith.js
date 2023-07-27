@@ -498,7 +498,9 @@
 			display: flex;
 			background: black;
 			/*width: 35%;*/
-			width: calc(35% + 2em);
+			/*width: calc(35% + 2em);*/
+			
+			width: 500px; /* fixed with*/
 		}
 		
 		/*-----------------------------------------------------------------------------------*/
@@ -586,6 +588,7 @@
 			/*transform: scale(0.8);*/
 			
 			width: calc(100% - 2em);
+			font-size: 2vw;
 		}
 		
 		.mm_option:hover
