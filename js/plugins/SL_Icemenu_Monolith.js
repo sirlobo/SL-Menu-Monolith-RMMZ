@@ -310,7 +310,12 @@
 				cssSpc_verticalcascadeArr.push(`
 					#MainMenuWrapper.oMenuStyle--` + oMenuStyle_variation + ` > .mm_option:nth-child(` + (i) + `)
 					{
-						width: calc(100% - ` + (2.5 * i) + `em);
+						width: calc(100% - ` + (2.5 * i) + `em - 2em);
+					}
+					
+					#MainMenuWrapper.oMenuStyle--` + oMenuStyle_variation + ` > .mm_option:nth-child(` + (i) + `):hover
+					{
+						width: calc(100% - ` + (2.5 * i) + `em + 2em);
 					}
 				`);
 			}
