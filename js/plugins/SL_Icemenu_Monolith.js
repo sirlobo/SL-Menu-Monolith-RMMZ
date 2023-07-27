@@ -597,10 +597,12 @@
 			transition: 0.1s;
 			margin: 0.25em 0;
 			width: calc(100% - 2em);
-			font-size: 1.5em;
+			/*font-size: 1.5em;**/
 			
 			/*width: calc(100% - 360px);
 			height: 52px;*/
+			
+			font-size: calc(100% + 0.75em);
 		}
 		
 		.mm_option:hover
@@ -662,7 +664,7 @@
 		/* Media queries
 		/*-----------------------------------------------------------------------------------*/
 		
-		@media screen and (max-width: 720px)
+		@media screen and (max-width: 640px)
 		{
 			.mm_option
 			{
@@ -800,6 +802,8 @@
 			menuContainer.style.removeProperty('width');
 			menuContainer.style.removeProperty('height');
 
+			// menuContainer.style.setProperty('width', 'calc(' + gameVideo_W + ' - ' + sizeOffset + 'px' + ')');
+			// menuContainer.style.setProperty('height', 'calc(' + gameVideo_H + ' - ' + sizeOffset + 'px' + ')');
 			menuContainer.style.setProperty('width', 'calc(' + gameVideo_W + ' - ' + sizeOffset + 'px' + ')');
 			menuContainer.style.setProperty('height', 'calc(' + gameVideo_H + ' - ' + sizeOffset + 'px' + ')');
 
