@@ -178,14 +178,16 @@
 	//-----------------------------------------------------------------------------------//
 	
     const pluginName = "SL Icemenu Monolith";
-	let subfolder = 'teste';
-	alert((typeof subfolder === 'string' && subfolder.length === 0));
-    const slpath = function(subfolder){
-		let plugin_path_rel = '../../js/plugins/SL_Icemenu_Monolith/';
-		
-		// return (typeof subfolder === 'string' && subfolder.length === 0) ? plugin_path_rel : plugin_path_rel + subfolder + '/';
-	}
 
+    const slpath = function(firstSubfolder = '', secondSubfolder = ''){
+		let plugin_path_rel = '../../js/plugins/SL_Icemenu_Monolith/';
+
+		firstSubfolder = (typeof firstSubfolder === 'string' && arguments.length == 0 && firstSubfolder != '') ?  '' : firstSubfolder + '/';
+		secondSubfolder = (typeof secondSubfolder === 'string' && arguments.length == 0 && secondSubfolder != '') ?  '' : secondSubfolder + '/';
+		
+		return plugin_path_rel + firstSubfolder + secondSubfolder;
+	}
+	
 	//-----------------------------------------------------------------------------------//
 	// Define e configura os parâmetros
 	//-----------------------------------------------------------------------------------//
@@ -265,7 +267,7 @@
 		this._commandWindow.x = -2000;
 		this._commandWindow.y = -2000;
 
-		this._commandWindow.windowskin = ImageManager.loadSystem(slpath + "img/menu_window");
+		this._commandWindow.windowskin = ImageManager.loadSystem(slpath('img','menu_window'));
         
         //Remove Content BackSprite
         this._commandWindow._contentsBackSprite.alpha = 0;
@@ -544,7 +546,7 @@
 	// Configura a gamelogo
 	//-----------------------------------------------------------------------------------//
 	
-	const gamelogo_filename = slpath + slpath_img + 'gamelogo.png';
+	const gamelogo_filename = slpath('img') + 'gamelogo.png';
 
 	function createGamelogo(){
 		let elementID = 'mm_' + 'gamelogo_main';
@@ -684,11 +686,11 @@
     {
         if(oParams.CustomFont == null || oParams.CustomFont == "")
         {
-            return "fonts/" + Utils.encodeURI(filename);
+            return slpath('fonts') + Utils.encodeURI(filename);
 		}
         else
         {
-            return slpath + "fonts/" + oParams.CustomFont + ".ttf";
+            return slpath('fonts') + oParams.CustomFont + '.ttf';
 		}
     };
 	
@@ -696,7 +698,7 @@
 
     Scene_Title.prototype.UISprites= function(filename, xPos, yPos) {
         this._mPic = new Sprite();
-        this._mPic.bitmap = ImageManager.loadSystem(slpath + "img/" + filename);
+        this._mPic.bitmap = ImageManager.loadSystem(slpath('img') + filename);
         this._mPic.x = xPos;
         this._mPic.y = yPos;
         this.addChild(this._mPic);
