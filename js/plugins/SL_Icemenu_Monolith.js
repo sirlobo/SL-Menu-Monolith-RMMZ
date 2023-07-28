@@ -1,4 +1,13 @@
 (function() {
+	//------------------------------------------------------------------------------------------------------------------------//
+	// INICIALIZAÇÃO
+	// Executa e seta o essencial para funcionamento e/ou inicialização do sistema
+	//------------------------------------------------------------------------------------------------------------------------//
+
+	//ID exclusiva do plugin
+	const PluginID = 'SLICMLT';
+	const mainContainerID = PluginID + '_container'.toString();
+	
 	//Método que inicializa e seta os parâmetros, funções e métodos essenciais
 	function Initialize()
 	{
@@ -8,13 +17,18 @@
 	
 	Initialize();
 	
+	//------------------------------------------------------------------------------------------------------------------------//
+	// MANIPULAÇÃO DOS ELEMENTOS DE CONTAINER-MESTRE
+	// O container-mestre é usado em todos os plugins de interface que precisam ser escalonados proporcionalmente
+	//------------------------------------------------------------------------------------------------------------------------//
+
 	//Variáveis globais para guardar o tamanho inicial do #gameVideo
 	var initialWidth, initialHeight;
 
 	//Método para criar o elemento "container_menu" e inserir o conteúdo HTML
 	function createContainerMenu() {
 		var containerMenu = document.createElement('div');
-		containerMenu.id = 'container_menu';
+		containerMenu.id = mainContainerID;
 		containerMenu.style.position = 'absolute';
 
 		document.body.appendChild(containerMenu);
@@ -42,13 +56,16 @@
 
 	// Método para inserir o conteúdo HTML
 	function insertHtmlContent(containerMenu) {
-		var htmlContent = `
+		var cssContent = `
 			<style>
-				body {
+				body
+				{
 					margin: 0;
 					padding: 0;
 				}
-				#container_menu {
+				
+				#` + mainContainerID + `
+				{
 					display: flex;
 					flex-direction: column;
 					justify-content: center;
@@ -57,7 +74,24 @@
 					z-index: 9999; /* Certifique-se de que o container_menu esteja acima de outros elementos */
 					pointer-events: none; /* Impede que o container_menu intercepte eventos do mouse */
 				}
-				.button {
+				
+				.btn:not(.disabled),
+				.interactive
+				{
+					pointer-events: all!important;
+				}
+				
+				/**/
+				
+				.btn[class*="disabled"],
+				.btn:disabled
+				{
+					pointer-events: none!important;
+					user-select: none!important;
+				}
+				
+				#` + mainContainerID + ` .wrapper__menu--item
+				{
 					padding: 1em;
 					background-color: #b3d1f3; /* Cor azul claro pouco saturado */
 					color: #fff;
@@ -68,21 +102,26 @@
 					outline: 0;
 					transition: 0.2s;
 				}
-				.button:hover {
+				
+				#` + mainContainerID + ` .wrapper__menu--item:hover
+				{
 					background-color: #0000cc; /* Cor azul claro pouco saturado */
 				}
 			</style>
-			<div id="container_menu">
-				<!-- Coloque aqui os três botões -->
-				<div id="container_menu">
-					<button class="button">Botão 1</button>
-					<button class="button">Botão 2</button>
-					<button class="button">Botão 3</button>
+		`;
+		
+		var htmlContent = `
+			<div class="wrapper">
+				<div class="wrapper__menu">
+					<button class="btn wrapper__menu--item">Botão 1</button>
+					<button class="btn wrapper__menu--item">Botão 2</button>
+					<button class="btn wrapper__menu--item">Botão 3</button>
 				<div>
 			</div>
 		`;
 
-		containerMenu.insertAdjacentHTML('beforeend', htmlContent);
+		document.head.insertAdjacentHTML('beforeend', cssContent); //Insert CSS styles on <head>
+		containerMenu.insertAdjacentHTML('beforeend', htmlContent); //Insert HTML elements
 	}
 
 	// Método para atualizar a escala do "container_menu" com base no #gameVideo
@@ -114,16 +153,20 @@
 			containerMenu.style.top = gameVideoRect.top + 'px';
 		}
 	}
+	
+	//------------------------------------------------------------------------------------------------------------------------//
+	// MANIPULAÇÃO DOS MÓDULOS DO PLUGIN
+	// A partir daqui, ficam os métodos modulares para criar e manipular outros elementos relativos ao plugin
+	//------------------------------------------------------------------------------------------------------------------------//
 
 	setTimeout(function() {
 		// Verificar se estamos no menu principal antes de criar o "container_menu" e inserir o conteúdo HTML
 		if (SceneManager._scene instanceof Scene_Title){
 			// Aguardar 350 milissegundos antes de criar o "container_menu"
-			
-				createContainerMenu();
+			createContainerMenu();
 			
 		} else {
 			console.error('Erro: Não é possível criar o elemento HTML fora da cena do menu principal.');
 		}
-	}, 350);
+	}, 1000);
 })();
