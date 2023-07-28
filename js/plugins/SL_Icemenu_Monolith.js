@@ -44,6 +44,17 @@
                     gap: 10px;
                     z-index: 9999; /* Certifique-se de que o container_menu esteja acima de outros elementos */
                 }
+				
+				.btn
+				button,
+				input[type="button"],
+				.btn:hover
+				button:hover,
+				input[type="button"]:hover
+				{
+					transition: 0.2s;
+				}
+				
                 .button {
                     padding: 1em;
                     background-color: #b3d1f3; /* Cor azul claro pouco saturado */
@@ -51,6 +62,11 @@
                     font-size: 16px;
                     cursor: pointer;
                     text-align: center; /* Centralizar o texto nos botões */
+					border: 0 none;
+					outline: 0;
+                }
+                .button:hover {
+                    background-color: #0000cc; /* Cor azul claro pouco saturado */
                 }
             </style>
             <div id="container_menu">
