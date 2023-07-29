@@ -30,9 +30,11 @@
 		// Manipulação da janela original (remover ou ocultar)
 		//-----------------------------------------------------------------------------------//
 		
-		//Desabilita a interação no canvas original para evitar conflitos
+		//Desabilita a interação no canvas original (e outros elementos) para evitar conflitos
 		setTimeout(function(){
 			document.querySelector('#gameCanvas').classList.add('interactionDisabled');
+			// document.querySelector('#gameCanvas').classList.add('anim');
+			document.querySelector('#errorPrinter').classList.add('interactionDisabled');
 		},350);
 		
 		//Remove o menu de opções original
@@ -68,11 +70,16 @@
 	function createContainerMenu() {
 		var containerMenu = document.createElement('div');
 		containerMenu.id = mainContainerID;
-		containerMenu.classList.add('mm_containerMenu');
 		containerMenu.classList.add('invisible');
-
 		document.body.appendChild(containerMenu);
+
 		insertHtmlContent(containerMenu);
+
+		/*var containerMenuBlurFX = document.createElement('div');
+		containerMenuBlurFX.id = 'containerMenuBlurFX';
+		containerMenuBlurFX.classList.add('invisible');
+		containerMenuBlurFX.classList.add('anim');
+		document.body.appendChild(containerMenuBlurFX);*/
 
 		// Obter width e height do #gameVideo
 		var gameVideo = document.getElementById('gameVideo');
@@ -104,7 +111,7 @@
 					padding: 0;
 				}
 
-				.interactionDisabled
+				.interactionDisabled,
 				.btn[class*="disabled"],
 				.btn:disabled
 				{
@@ -119,27 +126,18 @@
 
 				/**/
 
-				.mm_containerMenu
-				{
-					position: absolute;
-				}
-
-				.mm_containerMenu:not(.invisible)
-				{
-					animation: fadeIn 2s;
-				}
-				
 				#` + mainContainerID + `
 				{
+					position: absolute;
 					display: flex;
 					flex-direction: column;
 					justify-content: center;
 					align-items: center;
-					gap: 10px;
+					/*gap: 10px;*/
 					z-index: 9999; /* Certifique-se de que o container_menu esteja acima de outros elementos */
 					pointer-events: none; /* Impede que o container_menu intercepte eventos do mouse */
 					
-					animation: fadeIn 0.5s;
+					animation: fadeIn 1s;
 				}
 				
 				.btn:not(.disabled),
@@ -148,7 +146,13 @@
 					pointer-events: all!important;
 				}
 				
-				/**/
+				/* MAIN MENU */
+
+				#` + mainContainerID + ` .wrapper__menu
+				{
+					display: flex;
+					flex-direction: column;
+				}
 
 				#` + mainContainerID + ` .wrapper__menu--item
 				{
@@ -168,12 +172,34 @@
 					background-color: #0000cc; /* Cor azul claro pouco saturado */
 				}
 
+				#containerMenuBlurFX.anim
+				{
+					background: rgba(0, 0, 128, 0.5);
+					width: 100vw;
+					height: 100vh;
+					position: absolute;
+					z-index: 999;
+
+					margin-top: -1em;
+				}
+
 				/* CSS ANIMATIONS */
+
+				#gameCanvas.anim
+				{
+					animation: animatedBlur 10s infinite alternate;
+				}
 
 				@keyframes fadeIn
 				{
 					from{opacity: 0;}
 					to{opacity: 1;}
+				}
+
+				@keyframes animatedBlur
+				{
+					from{transform: scale(0.8); filter: blur(30px); margin-left: 0;}
+					to{filter: blur(110px); transform: scale(1.1); margin-left: -2em;}
 				}
 			</style>
 		`;
@@ -194,7 +220,10 @@
 		/**/
 
 		//Fade in to turn on the elements
-		setTimeout(()=>{containerMenu.classList.remove('invisible');},350);
+		setTimeout(()=>{
+			containerMenu.classList.remove('invisible');
+			// containerMenuBlurFX.classList.remove('invisible');
+		},350);
 	}
 
 	// Método para atualizar a escala do "container_menu" com base no #gameVideo
