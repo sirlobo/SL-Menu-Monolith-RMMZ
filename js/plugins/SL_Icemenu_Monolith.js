@@ -265,7 +265,7 @@
 		// Verificar se estamos no menu principal antes de criar o "container_menu" e inserir o conteúdo HTML
 		if (SceneManager._scene instanceof Scene_Title){
 			// Aguardar 350 milissegundos antes de criar o "container_menu"
-			createContainerMenu();
+			setTimeout(()=>{createContainerMenu();},350);
 		} else {
 			console.error('Erro: Não é possível criar o elemento HTML fora da cena do menu principal.');
 		}
