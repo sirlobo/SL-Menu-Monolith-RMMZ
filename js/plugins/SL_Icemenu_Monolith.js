@@ -1,4 +1,4 @@
-(function() {
+(() => {
 	//------------------------------------------------------------------------------------------------------------------------//
 	// INICIALIZAÇÃO
 	// Executa e seta o essencial para funcionamento e/ou inicialização do sistema
